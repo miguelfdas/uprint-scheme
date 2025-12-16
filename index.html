@@ -7,7 +7,16 @@
     <title>UPrint Scheme Ranking - Bauhaus Style</title>
 
     <style>
-        /* Reset básico e definições de fonte */
+        /* ================= VARIÁVEIS DE COR ================= */
+        :root {
+            --bg-color: #F4F4F4; /* Branco sujo/papel */
+            --text-color: #000000;
+            --primary-red: #D2232A;
+            --primary-cyan: #6ED3EF;
+            --aux-gray: #878787;
+        }
+
+        /* ================= RESET & BODY ================= */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,199 +24,249 @@
         }
 
         body {
-            /* Fundo Preto conforme paleta */
-            background-color: #000000;
-            /* Fonte Sans-serif forte e funcional */
-            font-family: 'Arial Black', 'Helvetica Neue', Helvetica, sans-serif;
-            color: #FFFFFF;
+            background-color: var(--bg-color);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             padding-top: 40px;
-            padding-bottom: 80px; /* Espaço para o footer fixo */
+            padding-bottom: 100px;
             position: relative;
+            overflow-x: hidden; /* Evita scroll horizontal devido às formas geométricas */
         }
 
-        /* Estilo do Logo Principal */
+        /* ================= FUNDO BAUHAUS (Estilo Vector.jpg) ================= 
+           Criação do "Feixe Vermelho" e textura de grão através de CSS
+        */
+        
+        /* Textura de ruído (Grain) para dar aspeto de póster */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        /* A Linha Vermelha Geométrica (O "Feixe") */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%); /* Centralizado inicialmente */
+            width: 40px; /* Largura do feixe */
+            height: 100%;
+            background-color: var(--primary-red);
+            z-index: -1;
+            /* Ligeira inclinação para dinamismo, ou reto para rigidez Bauhaus. 
+               Vou deixar reto conforme o 'laser' do vector.jpg, mas deslocado. */
+            margin-left: 150px; /* Desloca para a direita para não ficar atrás do texto */
+        }
+
+        /* Elemento geométrico extra (Círculo ou quadrado) para equilíbrio */
+        .geo-shape {
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background-color: var(--text-color);
+            z-index: -1;
+        }
+
+        /* ================= LOGO PRINCIPAL ================= */
         .main-logo {
             width: 80%;
-            max-width: 400px;
+            max-width: 350px;
             height: auto;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             display: block;
+            z-index: 1;
         }
 
-        /* O contentor do ranking */
+        /* ================= TABELA DE RANKING (Minimalista) ================= */
         .ranking-card {
-            background-color: #000000;
+            background-color: #FFFFFF; /* Branco puro para o cartão */
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             height: 65vh;
-            /* Design Geométrico Bauhaus: Sem cantos redondos, sem sombras suaves */
-            border-radius: 0;
-            box-shadow: none;
             
-            /* Bordas grossas e coloridas assimétricas inspiradas nas linhas do projeto */
-            border-left: 15px solid #D2232A; /* Cor Principal Vermelha */
-            border-top: 15px solid #6ED3EF;  /* Cor Principal Ciano */
-            border-right: 2px solid #6ED3EF;
-            border-bottom: 2px solid #D2232A;
-
+            /* Minimalismo total: borda fina preta */
+            border: 2px solid #000000;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.1); /* Sombra dura subtil */
+            
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            z-index: 1; /* Fica acima das formas do fundo */
         }
 
-        /* Cabeçalho da tabela */
+        /* Layout de Grelha para 3 Colunas: [ # ] [ Nome ] [ Pontos ] */
+        .grid-layout {
+            display: grid;
+            /* 1ª col: estreita para número, 2ª: ocupa o resto, 3ª: fixa para pontos */
+            grid-template-columns: 60px 1fr 100px; 
+            align-items: center;
+            gap: 10px;
+        }
+
         .ranking-header {
-            /* Fundo Vermelho Principal para destaque */
-            background-color: #D2232A;
-            color: #FFFFFF;
-            padding: 20px 25px;
-            display: flex;
-            justify-content: space-between;
-            font-weight: 900; /* Extra Bold */
+            border-bottom: 2px solid #000000;
+            padding: 15px 20px;
+            font-weight: 900;
             text-transform: uppercase;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             letter-spacing: 1px;
-            border-bottom: 5px solid #000000;
+            background-color: #fff;
         }
 
-        /* Lista de jogadores */
         .ranking-list {
             flex-grow: 1;
             overflow-y: auto;
             padding: 0;
-            /* Scrollbar estilo minimalista para browsers webkit */
             scrollbar-width: thin;
-            scrollbar-color: #D2232A #000000;
+            scrollbar-color: var(--primary-red) #FFFFFF;
+        }
+
+        /* Scrollbar Webkit */
+        .ranking-list::-webkit-scrollbar { width: 6px; }
+        .ranking-list::-webkit-scrollbar-track { background: #FFFFFF; }
+        .ranking-list::-webkit-scrollbar-thumb { background-color: var(--text-color); }
+
+        /* Linhas dos Jogadores */
+        .player-row {
+            padding: 15px 20px;
+            border-bottom: 1px solid #E0E0E0; /* Linha muito subtil */
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        /* Hover minimalista */
+        .player-row:hover {
+            background-color: var(--primary-cyan); /* Destaque Ciano */
+        }
+
+        /* Coluna do Rank (#) */
+        .col-rank {
+            font-weight: 900;
+            color: var(--primary-red); /* Número a vermelho */
+            font-size: 1.1rem;
         }
         
-        /* Estilização da scrollbar webkit */
-        .ranking-list::-webkit-scrollbar {
-            width: 8px;
-        }
-        .ranking-list::-webkit-scrollbar-track {
-            background: #000000;
-        }
-        .ranking-list::-webkit-scrollbar-thumb {
-            background-color: #D2232A;
-            border-radius: 0;
-        }
-
-
-        /* Linha individual do jogador */
-        .player-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 25px;
-            background-color: #000000;
-            /* Linha de separação na cor Ciano */
-            border-bottom: 2px solid #6ED3EF;
-            transition: all 0.3s ease;
-            font-weight: 700;
-        }
-
-        /* Efeito Hover */
-        .player-row:hover {
-            /* Inversão de cores no hover para contraste forte */
-            background-color: #6ED3EF;
-        }
-        .player-row:hover .player-name,
-        .player-row:hover .player-points {
-            color: #000000;
-        }
-
-        .player-name {
+        /* Coluna do Nome */
+        .col-name {
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .player-points {
-            font-weight: 900;
-            color: #6ED3EF; /* Pontos em Ciano para destaque */
+        /* Coluna dos Pontos */
+        .col-points {
+            text-align: right;
+            font-weight: bold;
         }
 
         .loading {
             text-align: center;
-            padding: 30px;
-            color: #D1D1D1; /* Cinza auxiliar */
-            font-style: italic;
-            text-transform: uppercase;
+            padding: 40px;
+            color: var(--aux-gray);
+            grid-column: 1 / -1; /* Ocupa todas as colunas */
         }
 
-        /* Área dos Logos no Rodapé */
+        /* ================= FOOTER ================= */
         .footer-logos {
             position: fixed;
             bottom: 20px;
             right: 20px;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
             z-index: 10;
-            /* Fundo preto subtil para garantir leitura se sobrepor algo */
-            background-color: rgba(0,0,0,0.7);
-            padding: 10px;
+            /* Fundo branco semi-transparente para leitura */
+            background-color: rgba(255,255,255,0.8); 
+            padding: 10px 15px;
+            border: 1px solid #000;
         }
 
         .footer-logo-bar, .footer-logo-neduc {
             height: auto;
-            /* IMPORTANTE: Como o fundo é preto e os logos originais são escuros,
-               usamos um filtro para inverter as cores para branco, garantindo visibilidade.
+            /* TRANSFORMAR EM PRETO PURO:
+               Grayscale(100%) tira a cor.
+               Brightness(0%) torna tudo preto. 
             */
-            filter: invert(1) grayscale(1);
+            filter: grayscale(100%) brightness(0%);
+            opacity: 0.9;
         }
         
-        /* Ajuste de tamanho específico para os logos do footer */
-        .footer-logo-bar {
-             height: 35px;
-        }
-        .footer-logo-neduc {
-             height: 45px;
-        }
+        .footer-logo-bar { height: 30px; }
+        .footer-logo-neduc { height: 40px; }
 
-        /* Responsividade para ecrãs pequenos */
+        /* ================= MOBILE ================= */
         @media (max-width: 600px) {
-             .ranking-card {
-                 border-width: 10px 2px 2px 5px;
-                 height: 70vh;
-             }
-            .footer-logos {
-                flex-direction: column;
-                right: 10px;
-                bottom: 10px;
-                gap: 10px;
-                align-items: flex-end;
+            body::after {
+                /* No mobile, o feixe vermelho fica mais fino e atrás */
+                width: 20px;
+                margin-left: 80px;
             }
-            .footer-logo-bar { height: 25px; }
-            .footer-logo-neduc { height: 35px; }
+            .geo-shape {
+                left: -20px;
+            }
+
+            .ranking-card {
+                width: 95%;
+                height: 70vh;
+            }
+
+            .ranking-header, .player-row {
+                padding: 15px 10px;
+                font-size: 0.85rem;
+            }
+            
+            /* Ajuste da grelha para mobile */
+            .grid-layout {
+                grid-template-columns: 40px 1fr 70px; 
+            }
+
+            .footer-logos {
+                position: static; /* No mobile deixa de ser fixo para não tapar conteúdo */
+                margin-top: 20px;
+                background: transparent;
+                border: none;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
+    <div class="geo-shape"></div>
+
+    <img src="logo-typed-color-01.png" alt="UPrint Scheme Logo" class="main-logo">
 
     <div class="ranking-card">
-        <div class="ranking-header">
+        <div class="ranking-header grid-layout">
+            <span>#</span>
             <span>Participante</span>
-            <span>Pontos</span>
+            <span style="text-align: right;">Pts</span>
         </div>
 
         <div class="ranking-list" id="ranking-container">
-            <div class="loading">A carregar dados...</div>
+            <div class="loading">A carregar...</div>
         </div>
     </div>
 
     <footer class="footer-logos">
-        <img src="ASUC_Barralogos_2.svg" alt="Parceiros ASUC" class="footer-logo-bar">
-        <img src="NEDUC.svg" alt="NEDUC Logo" class="footer-logo-neduc">
+        <img src="ASUC_Barralogos_2.png" alt="Parceiros ASUC" class="footer-logo-bar">
+        <img src="NEDUC.png" alt="NEDUC Logo" class="footer-logo-neduc">
     </footer>
 
     <script>
-        // O script permanece exatamente o mesmo, pois o foco era apenas o design frontend.
         const sheetUrl = "https://docs.google.com/spreadsheets/d/1DjXXLwV10WsaMUGCS9qEBU6jjY0S8cpjRv_JhVgoqLQ/gviz/tq?tqx=out:csv&sheet=Folha1";
 
         async function fetchRanking() {
@@ -216,20 +275,23 @@
             try {
                 const response = await fetch(sheetUrl);
                 const data = await response.text();
-                // console.log("Dados recebidos do Google:", data);
                 const rows = data.split('\n');
                 let players = [];
+                
+                // Parse dos dados
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i];
                     if (!row) continue;
                     const columns = row.split(',');
                     if (columns.length < 2) continue;
+                    
                     let cleanName = columns[0].replace(/"/g, '').trim();
                     let rawPoints = columns[1];
                     if (rawPoints) {
                         rawPoints = rawPoints.replace(/"/g, '').replace(/pts/i, '').trim();
                     }
                     const finalPoints = parseInt(rawPoints);
+                    
                     if (cleanName && !isNaN(finalPoints)) {
                         players.push({
                             name: cleanName,
@@ -237,21 +299,28 @@
                         });
                     }
                 }
+                
+                // Ordenar
                 players.sort((a, b) => b.points - a.points);
+                
+                // Limpar loading
                 container.innerHTML = '';
+                
+                // Gerar HTML com 3 colunas
                 players.forEach((player, index) => {
                     const html = `
-                        <div class="player-row">
-                            <span class="player-name">${index + 1}. ${player.name}</span>
-                            <span class="player-points">${player.points} pts</span>
+                        <div class="player-row grid-layout">
+                            <span class="col-rank">${index + 1}</span>
+                            <span class="col-name" title="${player.name}">${player.name}</span>
+                            <span class="col-points">${player.points}</span>
                         </div>
                     `;
                     container.innerHTML += html;
                 });
 
             } catch (error) {
-                console.error("Erro grave:", error);
-                container.innerHTML = '<div class="loading">Erro ao carregar. Tenta recarregar a página.</div>';
+                console.error("Erro:", error);
+                container.innerHTML = '<div class="loading">Erro ao carregar ranking.</div>';
             }
         }
 
@@ -260,4 +329,3 @@
 
 </body>
 </html>
-
