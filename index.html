@@ -16,7 +16,7 @@
             --bg-color: #F4F4F4; /* Branco sujo/papel */
             --text-color: #000000;
             --primary-red: #D2232A;
-            --primary-cyan: #6ED3EF; /* Azul fornecido */
+            --primary-cyan: #6ED3EF;
             --aux-gray: #878787;
         }
 
@@ -29,7 +29,6 @@
 
         body {
             background-color: var(--bg-color);
-            /* Alterado para Urbanist */
             font-family: 'Urbanist', sans-serif;
             color: var(--text-color);
             display: flex;
@@ -37,7 +36,7 @@
             align-items: center;
             min-height: 100vh;
             padding-top: 40px;
-            padding-bottom: 120px; /* Mais espaço para logos maiores */
+            padding-bottom: 120px;
             position: relative;
             overflow-x: hidden;
         }
@@ -65,33 +64,43 @@
             height: 100%;
             background-color: var(--primary-red);
             z-index: -1;
-            /* Antes estava 150px. 
-               Adicionamos ~80px (aprox 2cm) para a direita.
-               Novo valor: 230px.
-            */
+            /* Deslocamento para a direita (~230px) */
             margin-left: 230px; 
         }
 
-        /* Quadrado Decorativo */
+        /* Quadrado Decorativo Ciano */
         .geo-shape {
             position: fixed;
             top: 10%;
             left: 10%;
             width: 100px;
             height: 100px;
-            /* Alterado de preto para o Azul Cyan */
             background-color: var(--primary-cyan);
             z-index: -1;
         }
 
-        /* ================= LOGO PRINCIPAL ================= */
+        /* ================= CABEÇALHO (LOGO + SUBTÍTULO) ================= */
         .main-logo {
             width: 80%;
             max-width: 350px;
             height: auto;
-            margin-bottom: 30px;
+            /* Reduzi a margem inferior para aproximar do subtítulo */
+            margin-bottom: 10px; 
             display: block;
             z-index: 1;
+        }
+
+        .page-subtitle {
+            font-family: 'Urbanist', sans-serif;
+            font-weight: 900; /* Extra Bold para impacto Bauhaus */
+            color: #000000;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 30px; /* Espaço para a tabela */
+            z-index: 1;
+            padding: 0 10px; /* Margem lateral para não bater nas bordas em mobile */
         }
 
         /* ================= TABELA DE RANKING ================= */
@@ -99,12 +108,10 @@
             background-color: #FFFFFF;
             width: 90%;
             max-width: 700px;
-            height: 65vh;
+            height: 60vh; /* Ligeiro ajuste na altura */
             
             border: 2px solid #000000;
-            /* Bordas arredondadas conforme pedido */
             border-radius: 20px;
-            /* Overflow hidden garante que o header não corta os cantos redondos */
             overflow: hidden; 
             
             box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
@@ -127,7 +134,7 @@
             padding: 15px 20px;
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 1rem; /* Ligeiramente maior com Urbanist */
+            font-size: 1rem;
             letter-spacing: 1px;
             background-color: #fff;
         }
@@ -149,7 +156,7 @@
             padding: 15px 20px;
             border-bottom: 1px solid #E0E0E0;
             font-weight: 600;
-            font-size: 1.1rem; /* Fonte maior para legibilidade */
+            font-size: 1.1rem;
             transition: background 0.2s;
         }
 
@@ -189,29 +196,28 @@
             right: 20px;
             display: flex;
             align-items: center;
-            gap: 30px; /* Mais espaço entre logos */
+            gap: 25px;
             z-index: 10;
             background-color: rgba(255,255,255,0.9); 
-            padding: 15px 25px;
+            padding: 10px 20px;
             border: 1px solid #000;
-            border-radius: 10px; /* Ligeiro arredondamento no footer também */
+            border-radius: 10px;
         }
 
         .footer-logo-bar, .footer-logo-neduc {
             height: auto;
             filter: grayscale(100%) brightness(0%);
-            opacity: 1; /* Opacidade total para preto forte */
+            opacity: 1;
         }
         
-        /* Aumentar o tamanho dos logos conforme pedido */
-        .footer-logo-bar { height: 50px; } /* Era 30px */
-        .footer-logo-neduc { height: 65px; } /* Era 40px */
+        /* AJUSTE DE TAMANHO DOS LOGOS (Maiores que o original, menores que o anterior) */
+        .footer-logo-bar { height: 40px; } 
+        .footer-logo-neduc { height: 52px; }
 
         /* ================= MOBILE ================= */
         @media (max-width: 600px) {
             body::after {
                 width: 20px;
-                /* Ajuste proporcional no mobile também */
                 margin-left: 100px; 
             }
             .geo-shape {
@@ -220,9 +226,16 @@
                 height: 80px;
             }
 
+            /* Ajuste do subtítulo em mobile */
+            .page-subtitle {
+                font-size: 1rem;
+                letter-spacing: 1px;
+                margin-bottom: 20px;
+            }
+
             .ranking-card {
                 width: 95%;
-                height: 70vh;
+                height: 65vh;
             }
 
             .ranking-header, .player-row {
@@ -242,9 +255,10 @@
                 justify-content: center;
                 gap: 20px;
             }
-            /* No mobile, logos ligeiramente menores que no desktop, mas maiores que antes */
-            .footer-logo-bar { height: 40px; }
-            .footer-logo-neduc { height: 55px; }
+            
+            /* Ajuste mobile dos logos */
+            .footer-logo-bar { height: 35px; }
+            .footer-logo-neduc { height: 45px; }
         }
     </style>
 </head>
@@ -254,6 +268,8 @@
     <div class="geo-shape"></div>
 
     <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
+
+    <h2 class="page-subtitle">THE UPRINT SCHEME LEADERBOARD</h2>
 
     <div class="ranking-card">
         <div class="ranking-header grid-layout">
