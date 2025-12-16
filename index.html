@@ -11,16 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <style>
-        /* ================= VARIÁVEIS DE COR ================= */
         :root {
-            --bg-color: #F4F4F4; /* Branco sujo/papel */
+            --bg-color: #F4F4F4;
             --text-color: #000000;
             --primary-red: #D2232A;
             --primary-cyan: #6ED3EF;
             --aux-gray: #878787;
         }
 
-        /* ================= RESET & BODY ================= */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -31,19 +29,19 @@
             background-color: var(--bg-color);
             font-family: 'Urbanist', sans-serif;
             color: var(--text-color);
+            
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            padding-top: 40px;
-            padding-bottom: 120px;
+            
+            height: 100vh; 
+            overflow: hidden; 
+            
+            padding-top: 30px;
+            padding-bottom: 0;
             position: relative;
-            overflow-x: hidden;
         }
-
-        /* ================= FUNDO & ELEMENTOS GEOMÉTRICOS ================= */
         
-        /* Textura de ruído (Grain) */
         body::before {
             content: "";
             position: fixed;
@@ -53,7 +51,6 @@
             z-index: -2;
         }
 
-        /* A Linha Vermelha (O "Feixe") */
         body::after {
             content: "";
             position: fixed;
@@ -64,11 +61,9 @@
             height: 100%;
             background-color: var(--primary-red);
             z-index: -1;
-            /* Deslocamento para a direita (~230px) */
-            margin-left: 230px; 
+            margin-left: 230px;
         }
 
-        /* Quadrado Decorativo Ciano */
         .geo-shape {
             position: fixed;
             top: 10%;
@@ -79,49 +74,51 @@
             z-index: -1;
         }
 
-        /* ================= CABEÇALHO (LOGO + SUBTÍTULO) ================= */
         .main-logo {
             width: 80%;
             max-width: 350px;
             height: auto;
-            /* Reduzi a margem inferior para aproximar do subtítulo */
-            margin-bottom: 10px; 
             display: block;
             z-index: 1;
+            margin-bottom: 0; 
         }
 
         .page-subtitle {
             font-family: 'Urbanist', sans-serif;
-            font-weight: 900; /* Extra Bold para impacto Bauhaus */
+            font-weight: 900;
             color: #000000;
             text-transform: uppercase;
-            font-size: 1.5rem;
+            
+            font-size: 1.8rem; 
             letter-spacing: 2px;
             text-align: center;
-            margin-bottom: 30px; /* Espaço para a tabela */
+            
+            margin-top: 25px;
+            margin-bottom: 25px;
+            
             z-index: 1;
-            padding: 0 10px; /* Margem lateral para não bater nas bordas em mobile */
+            padding: 0 10px;
         }
 
-        /* ================= TABELA DE RANKING ================= */
         .ranking-card {
             background-color: #FFFFFF;
             width: 90%;
             max-width: 700px;
-            height: 60vh; /* Ligeiro ajuste na altura */
+            
+            height: 55vh; 
+            min-height: 300px;
             
             border: 2px solid #000000;
             border-radius: 20px;
             overflow: hidden; 
             
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
+            box-shadow: none;
             
             display: flex;
             flex-direction: column;
             z-index: 1;
         }
 
-        /* Layout de Grelha */
         .grid-layout {
             display: grid;
             grid-template-columns: 60px 1fr 100px; 
@@ -151,7 +148,6 @@
         .ranking-list::-webkit-scrollbar-track { background: #FFFFFF; }
         .ranking-list::-webkit-scrollbar-thumb { background-color: var(--text-color); border-radius: 10px; }
 
-        /* Linhas dos Jogadores */
         .player-row {
             padding: 15px 20px;
             border-bottom: 1px solid #E0E0E0;
@@ -164,36 +160,16 @@
             background-color: var(--primary-cyan);
         }
 
-        .col-rank {
-            font-weight: 900;
-            color: var(--primary-red);
-            font-size: 1.2rem;
-        }
-        
-        .col-name {
-            text-transform: uppercase;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.2rem; }
+        .col-name { text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .col-points { text-align: right; font-weight: 800; }
 
-        .col-points {
-            text-align: right;
-            font-weight: 800;
-        }
+        .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--aux-gray);
-            grid-column: 1 / -1;
-        }
-
-        /* ================= FOOTER ================= */
         .footer-logos {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             display: flex;
             align-items: center;
             gap: 25px;
@@ -210,42 +186,33 @@
             opacity: 1;
         }
         
-        /* AJUSTE DE TAMANHO DOS LOGOS (Maiores que o original, menores que o anterior) */
         .footer-logo-bar { height: 40px; } 
         .footer-logo-neduc { height: 52px; }
 
-        /* ================= MOBILE ================= */
         @media (max-width: 600px) {
-            body::after {
-                width: 20px;
-                margin-left: 100px; 
-            }
-            .geo-shape {
-                left: -20px;
-                width: 80px;
-                height: 80px;
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+                padding-bottom: 100px;
             }
 
-            /* Ajuste do subtítulo em mobile */
+            body::after { width: 20px; margin-left: 100px; }
+            .geo-shape { left: -20px; width: 80px; height: 80px; }
+
             .page-subtitle {
-                font-size: 1rem;
-                letter-spacing: 1px;
-                margin-bottom: 20px;
+                font-size: 1.2rem;
+                margin-top: 15px;
+                margin-bottom: 15px;
             }
 
             .ranking-card {
                 width: 95%;
-                height: 65vh;
+                height: 60vh;
             }
 
-            .ranking-header, .player-row {
-                padding: 15px 10px;
-                font-size: 0.9rem;
-            }
-            
-            .grid-layout {
-                grid-template-columns: 40px 1fr 70px; 
-            }
+            .ranking-header, .player-row { padding: 15px 10px; font-size: 0.9rem; }
+            .grid-layout { grid-template-columns: 40px 1fr 70px; }
 
             .footer-logos {
                 position: static;
@@ -256,7 +223,6 @@
                 gap: 20px;
             }
             
-            /* Ajuste mobile dos logos */
             .footer-logo-bar { height: 35px; }
             .footer-logo-neduc { height: 45px; }
         }
