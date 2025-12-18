@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UPrint Scheme Ranking - Final App Style</title>
+    <title>UPrint Scheme Ranking - Final Bauhaus Style</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,60 +38,105 @@
             align-items: center; 
             justify-content: flex-start;
             
-            /* Ocupa exatamente o ecrã todo, sem scroll na janela principal */
+            /* Ocupa exatamente o ecrã todo */
             height: 100vh;      
             height: 100dvh;     
             overflow: hidden;   
             
             padding-top: 20px;
-            padding-bottom: 20px; /* Margem inferior segura */
+            padding-bottom: 20px;
             position: relative;
             width: 100%;
         }
 
-        /* ================= FUNDO & DECORAÇÃO ================= */
+        /* ================= FUNDO & DECORAÇÃO (BASE/DESKTOP) ================= */
+        
+        /* 1. Textura de Ruído */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             pointer-events: none;
-            z-index: -2;
+            z-index: -10;
         }
 
-        /* Linha Vermelha */
+        /* 2. Linha Vermelha Principal (Ajustada para Desktop) */
         body::after {
             content: "";
             position: fixed;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
+            width: 50px; /* Ligeiramente mais grossa no desktop */
             height: 100%;
             background-color: var(--primary-red);
-            z-index: -1;
-            margin-left: 230px; /* Desktop position */
+            z-index: -5;
+            /* Movida significativamente mais para a direita */
+            margin-left: 400px; 
         }
 
+        /* 3. Quadrado Ciano Original */
         .geo-shape {
             position: fixed;
-            top: 10%;
-            left: 10%;
-            width: 100px;
-            height: 100px;
+            top: 12%;
+            left: 8%;
+            width: 110px;
+            height: 110px;
             background-color: var(--primary-cyan);
-            z-index: -1;
+            z-index: -6;
         }
 
-        /* ================= ELEMENTOS SUPERIORES ================= */
+        /* ================= NOVOS ELEMENTOS BAUHAUS (DESKTOP) ================= */
+        /* Estes elementos só aparecem em ecrãs maiores */
+        
+        .bauhaus-elem {
+            position: fixed;
+            pointer-events: none;
+            z-index: -7;
+        }
+
+        /* Círculo Grande de Contorno */
+        .bh-circle {
+            top: 50%;
+            right: 15%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 400px;
+            border: 4px solid #000000;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        /* Retângulo Horizontal Ciano */
+        .bh-rect {
+            bottom: 15%;
+            left: 0;
+            width: 35%;
+            height: 40px;
+            background-color: var(--primary-cyan);
+            z-index: -8; /* Atrás da linha vermelha */
+        }
+
+        /* Linha Fina Vertical Preta */
+        .bh-line {
+            top: 0;
+            left: 25%;
+            width: 2px;
+            height: 50vh;
+            background-color: #000000;
+        }
+
+
+        /* ================= ELEMENTOS DE CONTEÚDO ================= */
         .main-logo {
             width: 70%;
             max-width: 300px;
             height: auto;
             display: block;
-            z-index: 1;
+            z-index: 2;
             margin-bottom: 0;
-            flex-shrink: 0; /* Impede que o logo encolha/desapareça */
+            flex-shrink: 0;
         }
 
         .page-subtitle {
@@ -102,13 +147,11 @@
             font-size: 1.5rem; 
             letter-spacing: 2px;
             text-align: center;
-            
             margin-top: 15px;
             margin-bottom: 15px;
-            
-            z-index: 1;
+            z-index: 2;
             padding: 0 10px;
-            flex-shrink: 0; /* Impede que o subtítulo desapareça */
+            flex-shrink: 0;
         }
 
         /* ================= CARTÃO DE RANKING ================= */
@@ -116,22 +159,16 @@
             background-color: #FFFFFF;
             width: 90%;
             max-width: 700px;
-            
-            /* FLEX GROW: Ocupa todo o espaço disponível, empurrando o footer para baixo sem sobrepor */
             flex-grow: 1; 
-            /* Min-height garante que não desaparece se o ecrã for minúsculo */
             min-height: 100px; 
-            
             margin-bottom: 15px; 
-            
             border: 2px solid #000000;
             border-radius: 20px;
             overflow: hidden; 
             box-shadow: none;
-            
             display: flex;
             flex-direction: column;
-            z-index: 1;
+            z-index: 2; /* Garante que fica à frente do fundo */
         }
 
         .grid-layout {
@@ -152,7 +189,6 @@
             flex-shrink: 0;
         }
 
-        /* SCROLL APENAS NA LISTA */
         .ranking-list {
             flex-grow: 1;
             overflow-y: auto; 
@@ -182,22 +218,17 @@
 
         /* ================= FOOTER ================= */
         .footer-logos {
-            /* MUDANÇA CRÍTICA: Static/Relative em vez de Fixed para evitar sobreposição */
             position: relative; 
-            /* Removemos bottom/right fixos pois agora faz parte do fluxo flex */
-            
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 20px;
             z-index: 10;
-            
             background-color: rgba(255,255,255,0.95); 
             padding: 10px 20px;
             border: 1px solid #000;
             border-radius: 12px;
-            
-            flex-shrink: 0; /* Garante que o footer nunca é esmagado */
+            flex-shrink: 0;
         }
 
         .footer-logo-bar, .footer-logo-neduc {
@@ -206,51 +237,35 @@
             image-rendering: -webkit-optimize-contrast;
         }
         
-        /* AJUSTE DE TAMANHO (NEDUC MENOR) */
         .footer-logo-bar { height: 35px; } 
-        .footer-logo-neduc { height: 42px; } /* Reduzido de 55px para 42px para equilíbrio */
+        .footer-logo-neduc { height: 42px; }
 
-        /* ================= MOBILE / TABLET ================= */
+        /* ================= MOBILE / TABLET (< 800px) ================= */
         @media (max-width: 800px) {
-            body {
-                /* Mantém estrutura app */
-                height: 100dvh; 
-                overflow: hidden;
-                padding-bottom: 15px;
-            }
+            
+            /* 1. ESCONDER NOVOS ELEMENTOS BAUHAUS NO MOBILE */
+            .bauhaus-elem { display: none; }
 
+            /* 2. REVERTER LINHA VERMELHA PARA ESTILO MOBILE */
             body::after {
                 width: 15px;
                 margin-left: 0;
-                left: 90%; 
+                left: 92%; /* Encostada à direita */
             }
             
+            /* 3. AJUSTAR QUADRADO CIANO */
             .geo-shape {
-                width: 60px; height: 60px; left: -10px; top: 20px;
+                width: 60px; height: 60px; left: -15px; top: 20px;
             }
 
+            /* Resto dos ajustes mobile mantidos */
+            body { padding-bottom: 15px; }
             .main-logo { width: 60%; margin-top: 10px; }
             .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
-
-            .ranking-card {
-                width: 95%; 
-                margin: 0 auto 15px auto;
-                /* A altura ajusta-se automaticamente graças ao flex-grow */
-            }
-
+            .ranking-card { width: 95%; margin: 0 auto 15px auto; }
             .grid-layout { grid-template-columns: 40px 1fr 60px; gap: 5px; }
             .ranking-header, .player-row { padding: 12px 10px; font-size: 0.85rem; }
-
-            .footer-logos {
-                background: transparent;
-                border: none;
-                padding: 0;
-                gap: 15px;
-                /* Garante que cabe em ecrãs muito pequenos */
-                transform: scale(0.95); 
-            }
-            
-            /* Tamanhos Mobile */
+            .footer-logos { background: transparent; border: none; padding: 0; gap: 15px; transform: scale(0.95); }
             .footer-logo-bar { height: 30px; }
             .footer-logo-neduc { height: 38px; }
         }
@@ -259,7 +274,9 @@
 
 <body>
 
-    <div class="geo-shape"></div>
+    <div class="geo-shape"></div> <div class="bauhaus-elem bh-circle"></div>
+    <div class="bauhaus-elem bh-rect"></div>
+    <div class="bauhaus-elem bh-line"></div>
 
     <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
 
@@ -278,8 +295,8 @@
     </div>
 
     <footer class="footer-logos">
-        <img src="ASUC_Barralogos_2.svg" alt="Parceiros ASUC" class="footer-logo-bar">
-        <img src="NEDUC.svg" alt="NEDUC Logo" class="footer-logo-neduc">
+        <img src="ASUC_Barralogos_2.png" alt="Parceiros ASUC" class="footer-logo-bar">
+        <img src="NEDUC.png" alt="NEDUC Logo" class="footer-logo-neduc">
     </footer>
 
     <script>
