@@ -75,7 +75,7 @@
             margin-left: 230px; 
         }
 
-        /* 3. Quadrado Ciano Flutuante (Topo Esquerdo) */
+        /* 3. Primeiro Quadrado Ciano (Topo Esquerdo) */
         .geo-shape {
             position: fixed;
             top: 12%;
@@ -107,27 +107,36 @@
             z-index: -8;
         }
 
-        /* Retângulo Horizontal (Agora VERMELHO) */
+        /* Retângulo Horizontal Vermelho */
         .bh-rect {
             bottom: 15%;
             left: 0;
             width: 35%;
             height: 40px;
-            /* Alterado de Cyan para Red conforme pedido */
             background-color: var(--primary-red); 
             z-index: -8; 
         }
 
-        /* NOVA: Linha Azul à direita da vermelha */
+        /* Linha Azul à direita da vermelha */
         .bh-line-blue {
             top: 0;
             left: 50%;
-            /* Posicionada à direita da linha vermelha (que está a 230px) */
-            margin-left: 340px; 
-            width: 40px; /* Mesma espessura */
+            /* Movido mais para a direita (era 340px, agora 420px) */
+            margin-left: 420px; 
+            width: 40px; 
             height: 100%;
-            background-color: var(--primary-cyan); /* Azul/Ciano */
-            z-index: -6; /* Fica entrançada com o círculo */
+            background-color: var(--primary-cyan);
+            z-index: -6; 
+        }
+
+        /* NOVO: Segundo Quadrado Azul (Fundo Esquerdo) */
+        .bh-square-2 {
+            bottom: 28%; /* Acima da linha vermelha horizontal (que está a 15%) */
+            left: 22%;   /* À direita do primeiro quadrado, esquerda da tabela */
+            width: 90px;
+            height: 90px;
+            background-color: var(--primary-cyan);
+            z-index: -6;
         }
 
         /* ================= ELEMENTOS DE CONTEÚDO ================= */
@@ -255,7 +264,7 @@
                 left: 92%; 
             }
             
-            /* 3. AJUSTAR QUADRADO CIANO */
+            /* 3. AJUSTAR QUADRADO CIANO ORIGINAL */
             .geo-shape {
                 width: 60px; height: 60px; left: -15px; top: 20px;
             }
@@ -280,8 +289,7 @@
     <div class="bauhaus-elem bh-circle"></div>
     <div class="bauhaus-elem bh-rect"></div>
     <div class="bauhaus-elem bh-line-blue"></div>
-
-    <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
+    <div class="bauhaus-elem bh-square-2"></div> <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
 
     <h2 class="page-subtitle">THE UPRINT SCHEME LEADERBOARD</h2>
 
