@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPrint Scheme Ranking - Urbanist Style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UPrint Scheme Ranking - App Style</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <style>
+        /* ================= VARIÁVEIS ================= */
         :root {
             --bg-color: #F4F4F4;
             --text-color: #000000;
@@ -19,6 +20,7 @@
             --aux-gray: #878787;
         }
 
+        /* ================= RESET GERAL ================= */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -30,27 +32,35 @@
             font-family: 'Urbanist', sans-serif;
             color: var(--text-color);
             
+            /* LAYOUT FLEXBOX PARA APP */
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; /* Garante o centramento horizontal absoluto */
+            justify-content: flex-start;
             
-            height: 100vh; 
-            overflow: hidden; 
+            /* TRAVAR A PÁGINA (SEM SCROLL NO BODY) */
+            height: 100vh;      /* Fallback */
+            height: 100dvh;     /* Altura real para telemóveis (ignora barra de navegação) */
+            overflow: hidden;   /* Impede scroll da página */
             
-            padding-top: 30px;
-            padding-bottom: 0;
+            padding-top: 20px;
+            padding-bottom: 10px;
             position: relative;
+            width: 100%;
         }
-        
+
+        /* ================= FUNDO & DECORAÇÃO ================= */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
+            /* Ruído subtil */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: -2;
         }
 
+        /* Linha Vermelha */
         body::after {
             content: "";
             position: fixed;
@@ -61,7 +71,7 @@
             height: 100%;
             background-color: var(--primary-red);
             z-index: -1;
-            margin-left: 230px;
+            margin-left: 230px; /* Posição desktop */
         }
 
         .geo-shape {
@@ -74,13 +84,16 @@
             z-index: -1;
         }
 
+        /* ================= ELEMENTOS SUPERIORES ================= */
         .main-logo {
-            width: 80%;
-            max-width: 350px;
+            width: 70%;
+            max-width: 300px;
             height: auto;
             display: block;
             z-index: 1;
-            margin-bottom: 0; 
+            margin-bottom: 0;
+            /* Flex-shrink impede que o logo desapareça se o ecrã for muito pequeno */
+            flex-shrink: 0; 
         }
 
         .page-subtitle {
@@ -88,30 +101,31 @@
             font-weight: 900;
             color: #000000;
             text-transform: uppercase;
-            
-            font-size: 1.8rem; 
+            font-size: 1.5rem; 
             letter-spacing: 2px;
             text-align: center;
             
-            margin-top: 25px;
-            margin-bottom: 25px;
+            margin-top: 15px;
+            margin-bottom: 15px;
             
             z-index: 1;
             padding: 0 10px;
+            flex-shrink: 0;
         }
 
+        /* ================= CARTÃO DE RANKING ================= */
         .ranking-card {
             background-color: #FFFFFF;
             width: 90%;
             max-width: 700px;
             
-            height: 55vh; 
-            min-height: 300px;
+            /* ALTURA FLEXÍVEL: Ocupa o espaço que sobra entre o título e o footer */
+            flex-grow: 1; 
+            margin-bottom: 15px; /* Espaço para o footer não colar */
             
             border: 2px solid #000000;
             border-radius: 20px;
-            overflow: hidden; 
-            
+            overflow: hidden; /* Mantém o scroll apenas dentro da lista */
             box-shadow: none;
             
             display: flex;
@@ -121,7 +135,7 @@
 
         .grid-layout {
             display: grid;
-            grid-template-columns: 60px 1fr 100px; 
+            grid-template-columns: 50px 1fr 80px; 
             align-items: center;
             gap: 10px;
         }
@@ -131,15 +145,18 @@
             padding: 15px 20px;
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 1rem;
+            font-size: 0.9rem;
             letter-spacing: 1px;
             background-color: #fff;
+            flex-shrink: 0; /* Cabeçalho fixo dentro do cartão */
         }
 
+        /* ÁREA DE SCROLL (Apenas aqui) */
         .ranking-list {
             flex-grow: 1;
-            overflow-y: auto;
+            overflow-y: auto; /* Scroll ativado aqui */
             padding: 0;
+            /* Scrollbar bonita */
             scrollbar-width: thin;
             scrollbar-color: var(--primary-red) #FFFFFF;
         }
@@ -149,80 +166,118 @@
         .ranking-list::-webkit-scrollbar-thumb { background-color: var(--text-color); border-radius: 10px; }
 
         .player-row {
-            padding: 15px 20px;
+            padding: 12px 20px;
             border-bottom: 1px solid #E0E0E0;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: background 0.2s;
         }
 
-        .player-row:hover {
-            background-color: var(--primary-cyan);
-        }
+        .player-row:hover { background-color: var(--primary-cyan); }
 
-        .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.2rem; }
+        .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.1rem; }
         .col-name { text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .col-points { text-align: right; font-weight: 800; }
-
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
 
+        /* ================= FOOTER ================= */
         .footer-logos {
+            /* Fixo no Desktop, Flex item no Mobile */
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 20px;
+            right: 20px;
+            
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
             z-index: 10;
-            background-color: rgba(255,255,255,0.9); 
+            
+            background-color: rgba(255,255,255,0.95); 
             padding: 10px 20px;
             border: 1px solid #000;
-            border-radius: 10px;
+            border-radius: 12px;
+            flex-shrink: 0;
         }
 
         .footer-logo-bar, .footer-logo-neduc {
             height: auto;
-            filter: grayscale(100%) brightness(0%);
-            opacity: 1;
+            /* REMOVIDO BRIGHTNESS(0%) */
+            /* Se as imagens já são pretas, não precisa de filtro. 
+               Se tiverem cor e queres preto e branco suave, usa grayscale. */
+            filter: grayscale(100%); 
+            
+            /* Garantir renderização nítida */
+            image-rendering: -webkit-optimize-contrast;
         }
         
-        .footer-logo-bar { height: 40px; } 
-        .footer-logo-neduc { height: 52px; }
+        /* Ajuste de tamanhos para qualidade */
+        .footer-logo-bar { height: 45px; } 
+        .footer-logo-neduc { height: 55px; }
 
-        @media (max-width: 600px) {
+        /* ================= MOBILE / TABLET ================= */
+        @media (max-width: 800px) {
             body {
-                height: auto;
-                min-height: 100vh;
-                overflow-y: auto;
-                padding-bottom: 100px;
+                /* Garante comportamento de APP */
+                height: 100dvh; 
+                overflow: hidden;
+                justify-content: flex-start;
+                padding-bottom: 15px;
             }
 
-            body::after { width: 20px; margin-left: 100px; }
-            .geo-shape { left: -20px; width: 80px; height: 80px; }
+            body::after {
+                /* Linha vermelha menos intrusiva no mobile */
+                width: 15px;
+                margin-left: 0;
+                left: 90%; /* Encostada à direita */
+            }
+            
+            .geo-shape {
+                width: 60px; height: 60px; left: -10px; top: 20px;
+            }
+
+            .main-logo {
+                width: 60%;
+                margin-top: 10px;
+            }
 
             .page-subtitle {
-                font-size: 1.2rem;
-                margin-top: 15px;
-                margin-bottom: 15px;
+                font-size: 1.1rem;
+                margin: 10px 0;
             }
 
             .ranking-card {
-                width: 95%;
-                height: 60vh;
+                width: 95%; /* Quase a largura toda */
+                margin: 0 auto 15px auto; /* Margin auto garante o centramento */
+                border-width: 2px;
+                /* Flex grow já trata da altura */
             }
 
-            .ranking-header, .player-row { padding: 15px 10px; font-size: 0.9rem; }
-            .grid-layout { grid-template-columns: 40px 1fr 70px; }
-
-            .footer-logos {
-                position: static;
-                margin-top: 30px;
-                background: transparent;
-                border: none;
-                justify-content: center;
-                gap: 20px;
+            .grid-layout {
+                grid-template-columns: 40px 1fr 60px; 
+                gap: 5px;
             }
             
+            .ranking-header, .player-row {
+                padding: 12px 10px;
+                font-size: 0.85rem;
+            }
+
+            .footer-logos {
+                /* No mobile deixa de ser fixed e entra no fluxo flexbox */
+                position: static;
+                background: transparent;
+                border: none;
+                padding: 0;
+                margin-bottom: 5px;
+                
+                /* Layout dos logos em coluna ou linha dependendo do espaço */
+                flex-direction: row; 
+                justify-content: center;
+                gap: 15px;
+                transform: scale(0.9); /* Ligeira redução se necessário */
+            }
+            
+            /* Ajuste específico para a barra de logos não ficar minúscula */
             .footer-logo-bar { height: 35px; }
             .footer-logo-neduc { height: 45px; }
         }
@@ -250,8 +305,8 @@
     </div>
 
     <footer class="footer-logos">
-        <img src="ASUC_Barralogos_2.svg" alt="Parceiros ASUC" class="footer-logo-bar">
-        <img src="NEDUC.svg" alt="NEDUC Logo" class="footer-logo-neduc">
+        <img src="ASUC_Barralogos_2.png" alt="Parceiros ASUC" class="footer-logo-bar">
+        <img src="NEDUC.png" alt="NEDUC Logo" class="footer-logo-neduc">
     </footer>
 
     <script>
