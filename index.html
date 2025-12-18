@@ -61,22 +61,21 @@
             z-index: -10;
         }
 
-        /* 2. Linha Vermelha Principal (Ajustada para Desktop) */
+        /* 2. Linha Vermelha Principal */
         body::after {
             content: "";
             position: fixed;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px; /* Ligeiramente mais grossa no desktop */
+            width: 40px; 
             height: 100%;
             background-color: var(--primary-red);
             z-index: -5;
-            /* Movida significativamente mais para a direita */
-            margin-left: 400px; 
+            margin-left: 230px; 
         }
 
-        /* 3. Quadrado Ciano Original */
+        /* 3. Quadrado Ciano Flutuante (Topo Esquerdo) */
         .geo-shape {
             position: fixed;
             top: 12%;
@@ -87,8 +86,7 @@
             z-index: -6;
         }
 
-        /* ================= NOVOS ELEMENTOS BAUHAUS (DESKTOP) ================= */
-        /* Estes elementos só aparecem em ecrãs maiores */
+        /* ================= ELEMENTOS BAUHAUS ADICIONAIS (DESKTOP) ================= */
         
         .bauhaus-elem {
             position: fixed;
@@ -106,27 +104,31 @@
             border: 4px solid #000000;
             border-radius: 50%;
             opacity: 0.8;
+            z-index: -8;
         }
 
-        /* Retângulo Horizontal Ciano */
+        /* Retângulo Horizontal (Agora VERMELHO) */
         .bh-rect {
             bottom: 15%;
             left: 0;
             width: 35%;
             height: 40px;
-            background-color: var(--primary-cyan);
-            z-index: -8; /* Atrás da linha vermelha */
+            /* Alterado de Cyan para Red conforme pedido */
+            background-color: var(--primary-red); 
+            z-index: -8; 
         }
 
-        /* Linha Fina Vertical Preta */
-        .bh-line {
+        /* NOVA: Linha Azul à direita da vermelha */
+        .bh-line-blue {
             top: 0;
-            left: 25%;
-            width: 2px;
-            height: 50vh;
-            background-color: #000000;
+            left: 50%;
+            /* Posicionada à direita da linha vermelha (que está a 230px) */
+            margin-left: 340px; 
+            width: 40px; /* Mesma espessura */
+            height: 100%;
+            background-color: var(--primary-cyan); /* Azul/Ciano */
+            z-index: -6; /* Fica entrançada com o círculo */
         }
-
 
         /* ================= ELEMENTOS DE CONTEÚDO ================= */
         .main-logo {
@@ -168,7 +170,7 @@
             box-shadow: none;
             display: flex;
             flex-direction: column;
-            z-index: 2; /* Garante que fica à frente do fundo */
+            z-index: 2; 
         }
 
         .grid-layout {
@@ -250,7 +252,7 @@
             body::after {
                 width: 15px;
                 margin-left: 0;
-                left: 92%; /* Encostada à direita */
+                left: 92%; 
             }
             
             /* 3. AJUSTAR QUADRADO CIANO */
@@ -258,7 +260,6 @@
                 width: 60px; height: 60px; left: -15px; top: 20px;
             }
 
-            /* Resto dos ajustes mobile mantidos */
             body { padding-bottom: 15px; }
             .main-logo { width: 60%; margin-top: 10px; }
             .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
@@ -274,9 +275,11 @@
 
 <body>
 
-    <div class="geo-shape"></div> <div class="bauhaus-elem bh-circle"></div>
+    <div class="geo-shape"></div>
+    
+    <div class="bauhaus-elem bh-circle"></div>
     <div class="bauhaus-elem bh-rect"></div>
-    <div class="bauhaus-elem bh-line"></div>
+    <div class="bauhaus-elem bh-line-blue"></div>
 
     <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
 
@@ -295,8 +298,8 @@
     </div>
 
     <footer class="footer-logos">
-        <img src="ASUC_Barralogos_2.svg" alt="Parceiros ASUC" class="footer-logo-bar">
-        <img src="NEDUC.svg" alt="NEDUC Logo" class="footer-logo-neduc">
+        <img src="ASUC_Barralogos_2.png" alt="Parceiros ASUC" class="footer-logo-bar">
+        <img src="NEDUC.png" alt="NEDUC Logo" class="footer-logo-neduc">
     </footer>
 
     <script>
