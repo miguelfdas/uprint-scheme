@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UPrint Scheme Ranking - App Style</title>
+    <title>UPrint Scheme Ranking - Final App Style</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,19 +32,19 @@
             font-family: 'Urbanist', sans-serif;
             color: var(--text-color);
             
-            /* LAYOUT FLEXBOX PARA APP */
+            /* ESTRUTURA FLEX VERTICAL (APP STYLE) */
             display: flex;
             flex-direction: column;
-            align-items: center; /* Garante o centramento horizontal absoluto */
+            align-items: center; 
             justify-content: flex-start;
             
-            /* TRAVAR A PÁGINA (SEM SCROLL NO BODY) */
-            height: 100vh;      /* Fallback */
-            height: 100dvh;     /* Altura real para telemóveis (ignora barra de navegação) */
-            overflow: hidden;   /* Impede scroll da página */
+            /* Ocupa exatamente o ecrã todo, sem scroll na janela principal */
+            height: 100vh;      
+            height: 100dvh;     
+            overflow: hidden;   
             
             padding-top: 20px;
-            padding-bottom: 10px;
+            padding-bottom: 20px; /* Margem inferior segura */
             position: relative;
             width: 100%;
         }
@@ -54,7 +54,6 @@
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Ruído subtil */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: -2;
@@ -71,7 +70,7 @@
             height: 100%;
             background-color: var(--primary-red);
             z-index: -1;
-            margin-left: 230px; /* Posição desktop */
+            margin-left: 230px; /* Desktop position */
         }
 
         .geo-shape {
@@ -92,8 +91,7 @@
             display: block;
             z-index: 1;
             margin-bottom: 0;
-            /* Flex-shrink impede que o logo desapareça se o ecrã for muito pequeno */
-            flex-shrink: 0; 
+            flex-shrink: 0; /* Impede que o logo encolha/desapareça */
         }
 
         .page-subtitle {
@@ -110,7 +108,7 @@
             
             z-index: 1;
             padding: 0 10px;
-            flex-shrink: 0;
+            flex-shrink: 0; /* Impede que o subtítulo desapareça */
         }
 
         /* ================= CARTÃO DE RANKING ================= */
@@ -119,13 +117,16 @@
             width: 90%;
             max-width: 700px;
             
-            /* ALTURA FLEXÍVEL: Ocupa o espaço que sobra entre o título e o footer */
+            /* FLEX GROW: Ocupa todo o espaço disponível, empurrando o footer para baixo sem sobrepor */
             flex-grow: 1; 
-            margin-bottom: 15px; /* Espaço para o footer não colar */
+            /* Min-height garante que não desaparece se o ecrã for minúsculo */
+            min-height: 100px; 
+            
+            margin-bottom: 15px; 
             
             border: 2px solid #000000;
             border-radius: 20px;
-            overflow: hidden; /* Mantém o scroll apenas dentro da lista */
+            overflow: hidden; 
             box-shadow: none;
             
             display: flex;
@@ -148,15 +149,14 @@
             font-size: 0.9rem;
             letter-spacing: 1px;
             background-color: #fff;
-            flex-shrink: 0; /* Cabeçalho fixo dentro do cartão */
+            flex-shrink: 0;
         }
 
-        /* ÁREA DE SCROLL (Apenas aqui) */
+        /* SCROLL APENAS NA LISTA */
         .ranking-list {
             flex-grow: 1;
-            overflow-y: auto; /* Scroll ativado aqui */
+            overflow-y: auto; 
             padding: 0;
-            /* Scrollbar bonita */
             scrollbar-width: thin;
             scrollbar-color: var(--primary-red) #FFFFFF;
         }
@@ -182,13 +182,13 @@
 
         /* ================= FOOTER ================= */
         .footer-logos {
-            /* Fixo no Desktop, Flex item no Mobile */
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
+            /* MUDANÇA CRÍTICA: Static/Relative em vez de Fixed para evitar sobreposição */
+            position: relative; 
+            /* Removemos bottom/right fixos pois agora faz parte do fluxo flex */
             
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 20px;
             z-index: 10;
             
@@ -196,90 +196,63 @@
             padding: 10px 20px;
             border: 1px solid #000;
             border-radius: 12px;
-            flex-shrink: 0;
+            
+            flex-shrink: 0; /* Garante que o footer nunca é esmagado */
         }
 
         .footer-logo-bar, .footer-logo-neduc {
             height: auto;
-            /* REMOVIDO BRIGHTNESS(0%) */
-            /* Se as imagens já são pretas, não precisa de filtro. 
-               Se tiverem cor e queres preto e branco suave, usa grayscale. */
-            filter: grayscale(100%); 
-            
-            /* Garantir renderização nítida */
+            filter: grayscale(100%);
             image-rendering: -webkit-optimize-contrast;
         }
         
-        /* Ajuste de tamanhos para qualidade */
-        .footer-logo-bar { height: 45px; } 
-        .footer-logo-neduc { height: 55px; }
+        /* AJUSTE DE TAMANHO (NEDUC MENOR) */
+        .footer-logo-bar { height: 35px; } 
+        .footer-logo-neduc { height: 42px; } /* Reduzido de 55px para 42px para equilíbrio */
 
         /* ================= MOBILE / TABLET ================= */
         @media (max-width: 800px) {
             body {
-                /* Garante comportamento de APP */
+                /* Mantém estrutura app */
                 height: 100dvh; 
                 overflow: hidden;
-                justify-content: flex-start;
                 padding-bottom: 15px;
             }
 
             body::after {
-                /* Linha vermelha menos intrusiva no mobile */
                 width: 15px;
                 margin-left: 0;
-                left: 90%; /* Encostada à direita */
+                left: 90%; 
             }
             
             .geo-shape {
                 width: 60px; height: 60px; left: -10px; top: 20px;
             }
 
-            .main-logo {
-                width: 60%;
-                margin-top: 10px;
-            }
-
-            .page-subtitle {
-                font-size: 1.1rem;
-                margin: 10px 0;
-            }
+            .main-logo { width: 60%; margin-top: 10px; }
+            .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
 
             .ranking-card {
-                width: 95%; /* Quase a largura toda */
-                margin: 0 auto 15px auto; /* Margin auto garante o centramento */
-                border-width: 2px;
-                /* Flex grow já trata da altura */
+                width: 95%; 
+                margin: 0 auto 15px auto;
+                /* A altura ajusta-se automaticamente graças ao flex-grow */
             }
 
-            .grid-layout {
-                grid-template-columns: 40px 1fr 60px; 
-                gap: 5px;
-            }
-            
-            .ranking-header, .player-row {
-                padding: 12px 10px;
-                font-size: 0.85rem;
-            }
+            .grid-layout { grid-template-columns: 40px 1fr 60px; gap: 5px; }
+            .ranking-header, .player-row { padding: 12px 10px; font-size: 0.85rem; }
 
             .footer-logos {
-                /* No mobile deixa de ser fixed e entra no fluxo flexbox */
-                position: static;
                 background: transparent;
                 border: none;
                 padding: 0;
-                margin-bottom: 5px;
-                
-                /* Layout dos logos em coluna ou linha dependendo do espaço */
-                flex-direction: row; 
-                justify-content: center;
                 gap: 15px;
-                transform: scale(0.9); /* Ligeira redução se necessário */
+                /* Garante que cabe em ecrãs muito pequenos */
+                transform: scale(0.95); 
             }
             
-            /* Ajuste específico para a barra de logos não ficar minúscula */
-            .footer-logo-bar { height: 35px; }
-            .footer-logo-neduc { height: 45px; }
+            /* Tamanhos Mobile */
+            .footer-logo-bar { height: 30px; }
+            .footer-logo-neduc { height: 38px; }
         }
     </style>
 </head>
@@ -367,4 +340,3 @@
 
 </body>
 </html>
-
