@@ -148,6 +148,39 @@
             flex-shrink: 0;
         }
 
+        /* NAVIGATION TABS */
+        .nav-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid #000;
+            padding: 8px 20px;
+            font-family: 'Urbanist', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 30px;
+            background-color: #FFF;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary-red);
+            color: #FFF;
+            border-color: var(--primary-red);
+        }
+
+        .nav-btn:hover:not(.active) {
+            background-color: var(--primary-cyan);
+        }
+
+        /* CARD AND LISTS */
         .ranking-card {
             background-color: #FFFFFF;
             width: 90%;
@@ -167,6 +200,14 @@
         .grid-layout {
             display: grid;
             grid-template-columns: 50px 1fr 80px; 
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Layout específico para Atividades (sem coluna de rank) */
+        .grid-layout-activities {
+            display: grid;
+            grid-template-columns: 1fr 100px; 
             align-items: center;
             gap: 10px;
         }
@@ -207,6 +248,7 @@
         .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.1rem; }
         .col-name { text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .col-points { text-align: right; font-weight: 800; }
+        
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
 
         .footer-logos {
@@ -232,6 +274,9 @@
         .footer-logo-bar { height: 35px; } 
         .footer-logo-neduc { height: 42px; }
 
+        /* Utilitários de Visibilidade */
+        .hidden { display: none !important; }
+
         @media (max-width: 800px) {
             
             .bauhaus-elem { display: none; }
@@ -251,6 +296,8 @@
             .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
             .ranking-card { width: 95%; margin: 0 auto 15px auto; }
             .grid-layout { grid-template-columns: 40px 1fr 60px; gap: 5px; }
+            .grid-layout-activities { grid-template-columns: 1fr 70px; gap: 5px; }
+            
             .ranking-header, .player-row { padding: 12px 10px; font-size: 0.85rem; }
             .footer-logos { background: transparent; border: none; padding: 0; gap: 15px; transform: scale(0.95); }
             .footer-logo-bar { height: 30px; }
@@ -266,20 +313,76 @@
     <div class="bauhaus-elem bh-circle"></div>
     <div class="bauhaus-elem bh-rect"></div>
     <div class="bauhaus-elem bh-line-blue"></div>
-    <div class="bauhaus-elem bh-square-2"></div> <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
+    <div class="bauhaus-elem bh-square-2"></div>
 
-    <h2 class="page-subtitle">THE UPRINT SCHEME LEADERBOARD</h2>
+    <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
+
+    <h2 class="page-subtitle">UPrint Scheme</h2>
+
+    <div class="nav-container">
+        <button class="nav-btn active" onclick="switchTab('ranking')" id="btn-ranking">Ranking</button>
+        <button class="nav-btn" onclick="switchTab('activities')" id="btn-activities">Atividades</button>
+    </div>
 
     <div class="ranking-card">
-        <div class="ranking-header grid-layout">
-            <span>#</span>
-            <span>Participante</span>
-            <span style="text-align: right;">Pts</span>
+        
+        <div id="view-ranking">
+            <div class="ranking-header grid-layout">
+                <span>#</span>
+                <span>Participante</span>
+                <span style="text-align: right;">Pts</span>
+            </div>
+
+            <div class="ranking-list" id="ranking-container">
+                <div class="loading">A carregar...</div>
+            </div>
         </div>
 
-        <div class="ranking-list" id="ranking-container">
-            <div class="loading">A carregar...</div>
+        <div id="view-activities" class="hidden">
+            <div class="ranking-header grid-layout-activities">
+                <span>Descrição da Atividade</span>
+                <span style="text-align: right;">Valor</span>
+            </div>
+
+            <div class="ranking-list">
+                <div class="player-row grid-layout-activities">
+                    <span class="col-name">Inscrição no Uprint</span>
+                    <span class="col-points">50 pts</span>
+                </div>
+
+                <div class="player-row grid-layout-activities">
+                    <span class="col-name">Participação Workshop</span>
+                    <span class="col-points">200 pts</span>
+                </div>
+
+                <div class="player-row grid-layout-activities">
+                    <span class="col-name">Compra na Barral</span>
+                    <span class="col-points">10 pts</span>
+                </div>
+
+                <div class="player-row grid-layout-activities">
+                    <span class="col-name">Doação de Material</span>
+                    <span class="col-points">150 pts</span>
+                </div>
+
+                <div class="player-row grid-layout-activities">
+                    <span class="col-name">Trazer um amigo</span>
+                    <span class="col-points">100 pts</span>
+                </div>
+                
+                <div class="player-row grid-layout-activities">
+                    <span class="col-name">Voluntariado (1h)</span>
+                    <span class="col-points">300 pts</span>
+                </div>
+
+                 <div class="player-row grid-layout-activities">
+                    <span class="col-name">Vencedor de Torneio</span>
+                    <span class="col-points">500 pts</span>
+                </div>
+                
+                </div>
         </div>
+
     </div>
 
     <footer class="footer-logos">
@@ -288,6 +391,27 @@
     </footer>
 
     <script>
+        // Lógica das Tabs
+        function switchTab(tabName) {
+            const viewRanking = document.getElementById('view-ranking');
+            const viewActivities = document.getElementById('view-activities');
+            const btnRanking = document.getElementById('btn-ranking');
+            const btnActivities = document.getElementById('btn-activities');
+
+            if (tabName === 'ranking') {
+                viewRanking.classList.remove('hidden');
+                viewActivities.classList.add('hidden');
+                btnRanking.classList.add('active');
+                btnActivities.classList.remove('active');
+            } else {
+                viewRanking.classList.add('hidden');
+                viewActivities.classList.remove('hidden');
+                btnRanking.classList.remove('active');
+                btnActivities.classList.add('active');
+            }
+        }
+
+        // Lógica do Ranking (Google Sheets)
         const sheetUrl = "https://docs.google.com/spreadsheets/d/1DjXXLwV10WsaMUGCS9qEBU6jjY0S8cpjRv_JhVgoqLQ/gviz/tq?tqx=out:csv&sheet=Folha1";
 
         async function fetchRanking() {
@@ -345,4 +469,3 @@
 
 </body>
 </html>
-
