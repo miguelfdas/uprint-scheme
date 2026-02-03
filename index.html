@@ -148,6 +148,7 @@
             flex-shrink: 0;
         }
 
+        /* NAVIGATION TABS */
         .nav-container {
             display: flex;
             gap: 15px;
@@ -265,6 +266,7 @@
             gap: 15px;
         }
 
+        /* HEADER DOS DETALHES (Voltar + Instagram) */
         .detail-nav-header {
             display: flex;
             justify-content: space-between;
@@ -323,6 +325,7 @@
             text-align: justify;
         }
 
+        /* BOTÕES DE NAVEGAÇÃO INTERNA */
         .back-btn {
             padding: 6px 15px;
             font-size: 0.8rem;
@@ -336,6 +339,7 @@
         }
         .back-btn:hover { background: #000; color: #fff; }
 
+        /* Novo estilo para o botão pequeno do Instagram */
         .instagram-btn-small {
             background-color: #000;
             color: #fff;
@@ -444,7 +448,7 @@
         <div id="view-activities" class="hidden">
             <div class="ranking-header grid-layout-activities">
                 <span>Descrição da Atividade</span>
-                <span style="text-align: right;">Valor</span>
+                <span style="text-align: right;">Pontos</span>
             </div>
 
             <div class="ranking-list" id="activities-list-container">
@@ -533,6 +537,9 @@
         function switchTab(tabName) {
             views.detail.classList.add('hidden');
             
+            // Guardar a escolha no localStorage
+            localStorage.setItem('activeTab', tabName);
+
             if (tabName === 'ranking') {
                 views.ranking.classList.remove('hidden');
                 views.activities.classList.add('hidden');
@@ -543,6 +550,17 @@
                 views.activities.classList.remove('hidden');
                 btns.ranking.classList.remove('active');
                 btns.activities.classList.add('active');
+            }
+        }
+
+        // Função para carregar a aba salva ao iniciar
+        function loadSavedTab() {
+            const savedTab = localStorage.getItem('activeTab');
+            if (savedTab === 'activities') {
+                switchTab('activities');
+            } else {
+                // Por defeito, abre o ranking
+                switchTab('ranking');
             }
         }
 
@@ -575,6 +593,7 @@
             document.getElementById('d-cost').textContent = act.cost;
             document.getElementById('d-desc').textContent = act.desc;
             
+            // Lógica do botão Instagram
             const instaBtn = document.getElementById('d-instagram-btn');
             if(act.link) {
                 instaBtn.href = act.link;
@@ -596,7 +615,11 @@
             switchTab('activities'); 
         }
 
+        // Inicia a renderização
         renderActivities();
+        
+        // Carrega a aba salva (ranking ou atividades)
+        loadSavedTab();
 
         const sheetUrl = "https://docs.google.com/spreadsheets/d/1DjXXLwV10WsaMUGCS9qEBU6jjY0S8cpjRv_JhVgoqLQ/gviz/tq?tqx=out:csv&sheet=Folha1";
 
@@ -630,8 +653,10 @@
                     }
                 }
                 
+                // 1. Baralha a lista aleatoriamente primeiro
                 players.sort(() => Math.random() - 0.5);
 
+                // 2. Ordena por pontos (mantendo a aleatoriedade nos empates)
                 players.sort((a, b) => b.points - a.points);
 
                 container.innerHTML = '';
