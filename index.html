@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>UPrint Scheme Ranking</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
     <style>
         :root {
             --bg-color: #F4F4F4;
@@ -18,33 +15,22 @@
             --primary-cyan: #6ED3EF;
             --aux-gray: #878787;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg-color);
             font-family: 'Urbanist', sans-serif;
             color: var(--text-color);
-            
             display: flex;
             flex-direction: column;
             align-items: center; 
             justify-content: flex-start;
-            
             height: 100vh;      
             height: 100dvh;     
             overflow: hidden;   
-            
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding: 20px 0;
             position: relative;
             width: 100%;
         }
-        
         body::before {
             content: "";
             position: fixed;
@@ -53,377 +39,185 @@
             pointer-events: none;
             z-index: -10;
         }
-
         body::after {
             content: "";
             position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px; 
-            height: 100%;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 100%;
             background-color: var(--primary-red);
             z-index: -5;
             margin-left: 230px; 
         }
-
         .geo-shape {
-            position: fixed;
-            top: 12%;
-            left: 8%;
-            width: 110px;
-            height: 110px;
+            position: fixed; top: 12%; left: 8%;
+            width: 110px; height: 110px;
             background-color: var(--primary-cyan);
             z-index: -6;
         }
-        
-        .bauhaus-elem {
-            position: fixed;
-            pointer-events: none;
-            z-index: -7;
-        }
-
+        .bauhaus-elem { position: fixed; pointer-events: none; z-index: -7; }
         .bh-circle {
-            top: 50%;
-            right: 15%;
-            transform: translateY(-50%);
-            width: 400px;
-            height: 400px;
-            border: 4px solid #000000;
-            border-radius: 50%;
-            opacity: 0.8;
-            z-index: -8;
+            top: 50%; right: 15%; transform: translateY(-50%);
+            width: 400px; height: 400px;
+            border: 4px solid #000; border-radius: 50%;
+            opacity: 0.8; z-index: -8;
         }
-
         .bh-rect {
-            bottom: 15%;
-            left: 0;
-            width: 35%;
-            height: 40px;
-            background-color: var(--primary-red); 
-            z-index: -8; 
+            bottom: 15%; left: 0;
+            width: 35%; height: 40px;
+            background-color: var(--primary-red); z-index: -8; 
         }
-
         .bh-line-blue {
-            top: 0;
-            left: 50%;
-            margin-left: 420px; 
-            width: 40px; 
-            height: 100%;
-            background-color: var(--primary-cyan);
-            z-index: -6; 
+            top: 0; left: 50%; margin-left: 420px; 
+            width: 40px; height: 100%;
+            background-color: var(--primary-cyan); z-index: -6; 
         }
-
         .bh-square-2 {
-            bottom: 28%;
-            left: 22%;
-            width: 90px;
-            height: 90px;
-            background-color: var(--primary-cyan);
-            z-index: -6;
+            bottom: 28%; left: 22%;
+            width: 90px; height: 90px;
+            background-color: var(--primary-cyan); z-index: -6;
         }
-
         .main-logo {
-            width: 70%;
-            max-width: 300px;
-            height: auto;
-            display: block;
-            z-index: 2;
-            margin-bottom: 0;
-            flex-shrink: 0;
+            width: 70%; max-width: 300px; height: auto;
+            display: block; z-index: 2; margin-bottom: 0; flex-shrink: 0;
         }
-
         .page-subtitle {
-            font-family: 'Urbanist', sans-serif;
-            font-weight: 900;
-            color: #000000;
-            text-transform: uppercase;
-            font-size: 1.5rem; 
-            letter-spacing: 2px;
-            text-align: center;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            z-index: 2;
-            padding: 0 10px;
-            flex-shrink: 0;
+            font-family: 'Urbanist', sans-serif; font-weight: 900;
+            color: #000; text-transform: uppercase;
+            font-size: 1.5rem; letter-spacing: 2px;
+            text-align: center; margin: 15px 0;
+            z-index: 2; padding: 0 10px; flex-shrink: 0;
         }
-
-        /* NAVIGATION TABS */
         .nav-container {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 10px;
-            z-index: 2;
+            display: flex; gap: 15px; margin-bottom: 10px; z-index: 2;
         }
-
         .nav-btn {
-            background: transparent;
-            border: 2px solid #000;
+            background: transparent; border: 2px solid #000;
             padding: 8px 20px;
-            font-family: 'Urbanist', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 30px;
-            background-color: #FFF;
-            transition: all 0.2s;
+            font-family: 'Urbanist', sans-serif; font-weight: 800;
+            text-transform: uppercase; font-size: 0.9rem;
+            cursor: pointer; border-radius: 30px;
+            background-color: #FFF; transition: all 0.2s;
         }
-
         .nav-btn.active {
-            background-color: var(--primary-red);
-            color: #FFF;
-            border-color: var(--primary-red);
+            background-color: var(--primary-red); color: #FFF; border-color: var(--primary-red);
         }
-
-        .nav-btn:hover:not(.active) {
-            background-color: var(--primary-cyan);
-        }
-
+        .nav-btn:hover:not(.active) { background-color: var(--primary-cyan); }
         .ranking-card {
-            background-color: #FFFFFF;
-            width: 90%;
-            max-width: 700px;
-            flex-grow: 1; 
-            min-height: 100px; 
-            margin-bottom: 15px; 
-            border: 2px solid #000000;
-            border-radius: 20px;
-            overflow: hidden; 
-            box-shadow: none;
-            display: flex;
-            flex-direction: column;
-            z-index: 2; 
+            background-color: #FFF; width: 90%; max-width: 700px;
+            flex-grow: 1; min-height: 100px; margin-bottom: 15px; 
+            border: 2px solid #000; border-radius: 20px;
+            overflow: hidden; display: flex; flex-direction: column; z-index: 2; 
         }
-
         #view-ranking, #view-activities {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            height: 100%; display: flex; flex-direction: column; overflow: hidden;
         }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 50px 1fr 80px; 
-            align-items: center;
-            gap: 10px;
+        .grid-layout, .grid-layout-activities {
+            display: grid; align-items: center; gap: 10px;
         }
-
-        .grid-layout-activities {
-            display: grid;
-            grid-template-columns: 1fr 100px; 
-            align-items: center;
-            gap: 10px;
-        }
-
+        .grid-layout { grid-template-columns: 50px 1fr 80px; }
+        .grid-layout-activities { grid-template-columns: 1fr 100px; }
         .ranking-header {
-            border-bottom: 2px solid #000000;
-            padding: 15px 20px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            background-color: #fff;
-            flex-shrink: 0;
+            border-bottom: 2px solid #000; padding: 15px 20px;
+            font-weight: 900; text-transform: uppercase;
+            font-size: 0.9rem; letter-spacing: 1px;
+            background-color: #fff; flex-shrink: 0;
         }
-
         .ranking-list {
-            flex-grow: 1;
-            overflow-y: auto; 
-            padding: 0;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-red) #FFFFFF;
+            flex-grow: 1; overflow-y: auto; padding: 0;
+            scrollbar-width: thin; scrollbar-color: var(--primary-red) #FFF;
         }
-
         .ranking-list::-webkit-scrollbar { width: 6px; }
-        .ranking-list::-webkit-scrollbar-track { background: #FFFFFF; }
+        .ranking-list::-webkit-scrollbar-track { background: #FFF; }
         .ranking-list::-webkit-scrollbar-thumb { background-color: var(--text-color); border-radius: 10px; }
-
         .player-row {
-            padding: 12px 20px;
-            border-bottom: 1px solid #E0E0E0;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: background 0.2s;
-            cursor: pointer;
+            padding: 12px 20px; border-bottom: 1px solid #E0E0E0;
+            font-weight: 600; font-size: 1rem;
+            transition: background 0.2s; cursor: pointer;
         }
-
         .player-row:hover { background-color: var(--primary-cyan); }
-
         .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.1rem; }
         .col-name { text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .col-points { text-align: right; font-weight: 800; }
-        
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
-
         .detail-view {
-            padding: 20px;
-            overflow-y: auto;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            padding: 20px; overflow-y: auto; height: 100%;
+            display: flex; flex-direction: column; gap: 15px;
         }
-
-        /* HEADER DOS DETALHES (Voltar + Instagram) */
         .detail-nav-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 5px;
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; margin-bottom: 5px;
         }
-
         .detail-title {
-            font-size: 1.4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            line-height: 1.1;
-            color: var(--primary-red);
+            font-size: 1.4rem; font-weight: 900;
+            text-transform: uppercase; line-height: 1.1; color: var(--primary-red);
         }
-
         .detail-subtitle {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--aux-gray);
-            margin-top: 5px;
+            font-size: 1rem; font-weight: 600; color: var(--aux-gray); margin-top: 5px;
         }
-
         .detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            background-color: #F9F9F9;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #E0E0E0;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+            background-color: #F9F9F9; padding: 15px;
+            border-radius: 10px; border: 1px solid #E0E0E0;
         }
-
-        .detail-item {
-            display: flex;
-            flex-direction: column;
-        }
-
+        .detail-item { display: flex; flex-direction: column; }
         .detail-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-weight: 800;
-            color: var(--aux-gray);
-            margin-bottom: 3px;
+            font-size: 0.75rem; text-transform: uppercase;
+            font-weight: 800; color: var(--aux-gray); margin-bottom: 3px;
         }
-
-        .detail-value {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #000;
-        }
-
-        .detail-desc {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            text-align: justify;
-        }
-
-        /* BOTÕES DE NAVEGAÇÃO INTERNA */
+        .detail-value { font-size: 0.95rem; font-weight: 600; color: #000; }
+        .detail-desc { font-size: 0.95rem; line-height: 1.5; text-align: justify; }
         .back-btn {
-            padding: 6px 15px;
-            font-size: 0.8rem;
-            border: 1px solid #000;
-            background: #fff;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 700;
-            text-transform: uppercase;
-            transition: all 0.2s;
+            padding: 6px 15px; font-size: 0.8rem;
+            border: 1px solid #000; background: #fff;
+            border-radius: 20px; cursor: pointer;
+            font-weight: 700; text-transform: uppercase; transition: all 0.2s;
         }
         .back-btn:hover { background: #000; color: #fff; }
-
-        /* Novo estilo para o botão pequeno do Instagram */
         .instagram-btn-small {
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 6px 15px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            transition: background 0.2s;
+            background-color: #000; color: #fff;
+            text-decoration: none; font-size: 0.8rem; font-weight: 700;
+            padding: 6px 15px; border-radius: 20px;
+            text-transform: uppercase; transition: background 0.2s;
             display: inline-block;
         }
-
-        .instagram-btn-small:hover {
-            background-color: var(--primary-red);
-        }
-
+        .instagram-btn-small:hover { background-color: var(--primary-red); }
         .footer-logos {
-            position: relative; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            z-index: 10;
-            background-color: rgba(255,255,255,0.95); 
-            padding: 10px 20px;
-            border: 1px solid #000;
-            border-radius: 12px;
-            flex-shrink: 0;
+            position: relative; display: flex; align-items: center; justify-content: center;
+            gap: 20px; z-index: 10; background-color: rgba(255,255,255,0.95); 
+            padding: 10px 20px; border: 1px solid #000; border-radius: 12px; flex-shrink: 0;
         }
-
         .footer-logo-bar, .footer-logo-neduc {
-            height: auto;
-            filter: grayscale(100%);
-            image-rendering: -webkit-optimize-contrast;
+            height: auto; filter: grayscale(100%); image-rendering: -webkit-optimize-contrast;
         }
-        
         .footer-logo-bar { height: 35px; } 
         .footer-logo-neduc { height: 42px; }
-
         .hidden { display: none !important; }
-
         @media (max-width: 800px) {
-            
             .bauhaus-elem { display: none; }
-
-            body::after {
-                width: 15px;
-                margin-left: 0;
-                left: 92%; 
-            }
-            
-            .geo-shape {
-                width: 60px; height: 60px; left: -15px; top: 20px;
-            }
-
+            body::after { width: 15px; margin-left: 0; left: 92%; }
+            .geo-shape { width: 60px; height: 60px; left: -15px; top: 20px; }
             body { padding-bottom: 15px; }
             .main-logo { width: 60%; margin-top: 10px; }
             .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
             .ranking-card { width: 95%; margin: 0 auto 15px auto; }
             .grid-layout { grid-template-columns: 40px 1fr 60px; gap: 5px; }
             .grid-layout-activities { grid-template-columns: 1fr 70px; gap: 5px; }
-            
             .ranking-header, .player-row { padding: 12px 10px; font-size: 0.85rem; }
             .footer-logos { background: transparent; border: none; padding: 0; gap: 15px; transform: scale(0.95); }
             .footer-logo-bar { height: 30px; }
             .footer-logo-neduc { height: 38px; }
-
             .detail-grid { grid-template-columns: 1fr; gap: 10px; }
         }
     </style>
 </head>
-
 <body>
-
     <div class="geo-shape"></div>
-    
     <div class="bauhaus-elem bh-circle"></div>
     <div class="bauhaus-elem bh-rect"></div>
     <div class="bauhaus-elem bh-line-blue"></div>
     <div class="bauhaus-elem bh-square-2"></div>
 
     <img src="logo-typed-color-01.svg" alt="UPrint Scheme Logo" class="main-logo">
-
     <h2 class="page-subtitle">UPrint Scheme</h2>
 
     <div class="nav-container">
@@ -432,14 +226,12 @@
     </div>
 
     <div class="ranking-card">
-        
         <div id="view-ranking">
             <div class="ranking-header grid-layout">
-                <span>#</span>
+                <span>TOP</span>
                 <span>Participante</span>
-                <span style="text-align: right;">Pts</span>
+                <span style="text-align: right;">Pontos</span>
             </div>
-
             <div class="ranking-list" id="ranking-container">
                 <div class="loading">A carregar...</div>
             </div>
@@ -450,23 +242,18 @@
                 <span>Descrição da Atividade</span>
                 <span style="text-align: right;">Pontos</span>
             </div>
-
-            <div class="ranking-list" id="activities-list-container">
-                </div>
+            <div class="ranking-list" id="activities-list-container"></div>
         </div>
 
         <div id="view-detail" class="hidden detail-view">
-            
             <div class="detail-nav-header">
                 <button class="back-btn" onclick="closeDetail()">← Voltar a Atividades</button>
                 <a href="#" target="_blank" class="instagram-btn-small hidden" id="d-instagram-btn">Instagram ↗</a>
             </div>
-            
             <div>
                 <div class="detail-title" id="d-title">Titulo</div>
                 <div class="detail-subtitle" id="d-subtitle">Subtitulo</div>
             </div>
-
             <div class="detail-grid">
                 <div class="detail-item">
                     <span class="detail-label">Tipo</span>
@@ -493,13 +280,8 @@
                     <span class="detail-value" id="d-cost">Gratuito</span>
                 </div>
             </div>
-
-            <div class="detail-desc" id="d-desc">
-                Descrição completa aqui...
-            </div>
-            
+            <div class="detail-desc" id="d-desc">Descrição completa aqui...</div>
         </div>
-
     </div>
 
     <footer class="footer-logos">
@@ -535,151 +317,110 @@
         };
 
         function switchTab(tabName) {
+            if (tabName) localStorage.removeItem('activeDetailId');
             views.detail.classList.add('hidden');
-            
-            // Guardar a escolha no localStorage
             localStorage.setItem('activeTab', tabName);
 
-            if (tabName === 'ranking') {
-                views.ranking.classList.remove('hidden');
-                views.activities.classList.add('hidden');
-                btns.ranking.classList.add('active');
-                btns.activities.classList.remove('active');
-            } else {
-                views.ranking.classList.add('hidden');
-                views.activities.classList.remove('hidden');
-                btns.ranking.classList.remove('active');
-                btns.activities.classList.add('active');
-            }
+            const isRanking = tabName === 'ranking';
+            views.ranking.classList.toggle('hidden', !isRanking);
+            views.activities.classList.toggle('hidden', isRanking);
+            btns.ranking.classList.toggle('active', isRanking);
+            btns.activities.classList.toggle('active', !isRanking);
         }
 
-        // Função para carregar a aba salva ao iniciar
-        function loadSavedTab() {
+        function loadSavedState() {
+            const savedDetailId = localStorage.getItem('activeDetailId');
             const savedTab = localStorage.getItem('activeTab');
-            if (savedTab === 'activities') {
-                switchTab('activities');
-            } else {
-                // Por defeito, abre o ranking
-                switchTab('ranking');
+            if (savedDetailId) {
+                const id = parseInt(savedDetailId);
+                if (activitiesData.find(a => a.id === id)) {
+                    openDetail(id);
+                    return;
+                }
             }
+            switchTab(savedTab === 'activities' ? 'activities' : 'ranking');
         }
 
         function renderActivities() {
             const container = document.getElementById('activities-list-container');
-            container.innerHTML = '';
-
-            activitiesData.forEach(act => {
-                const html = `
-                    <div class="player-row grid-layout-activities" onclick="openDetail(${act.id})">
-                        <span class="col-name">${act.title}</span>
-                        <span class="col-points">${act.points} pts</span>
-                    </div>
-                `;
-                container.innerHTML += html;
-            });
+            container.innerHTML = activitiesData.map(act => `
+                <div class="player-row grid-layout-activities" onclick="openDetail(${act.id})">
+                    <span class="col-name">${act.title}</span>
+                    <span class="col-points">${act.points}</span>
+                </div>
+            `).join('');
         }
 
         function openDetail(id) {
             const act = activitiesData.find(a => a.id === id);
             if (!act) return;
 
-            document.getElementById('d-title').textContent = act.title;
-            document.getElementById('d-subtitle').textContent = act.subtitle;
-            document.getElementById('d-type').textContent = act.type;
-            document.getElementById('d-location').textContent = act.location;
-            document.getElementById('d-date').textContent = act.date;
-            document.getElementById('d-time').textContent = act.time;
-            document.getElementById('d-points').textContent = act.points + " pts";
-            document.getElementById('d-cost').textContent = act.cost;
-            document.getElementById('d-desc').textContent = act.desc;
-            
-            // Lógica do botão Instagram
-            const instaBtn = document.getElementById('d-instagram-btn');
-            if(act.link) {
-                instaBtn.href = act.link;
-                instaBtn.classList.remove('hidden');
-            } else {
-                instaBtn.classList.add('hidden');
+            localStorage.setItem('activeDetailId', id);
+            localStorage.setItem('activeTab', 'activities');
+
+            const elements = {
+                'd-title': act.title, 'd-subtitle': act.subtitle, 'd-type': act.type,
+                'd-location': act.location, 'd-date': act.date, 'd-time': act.time,
+                'd-points': `${act.points} pts`, 'd-cost': act.cost, 'd-desc': act.desc
+            };
+            for (const [key, val] of Object.entries(elements)) {
+                document.getElementById(key).textContent = val;
             }
-            
+
+            const instaBtn = document.getElementById('d-instagram-btn');
+            instaBtn.classList.toggle('hidden', !act.link);
+            if (act.link) instaBtn.href = act.link;
+
             views.ranking.classList.add('hidden');
             views.activities.classList.add('hidden');
             views.detail.classList.remove('hidden');
-            
             btns.ranking.classList.remove('active');
-            btns.activities.classList.remove('active'); 
+            btns.activities.classList.remove('active');
         }
 
         function closeDetail() {
+            localStorage.removeItem('activeDetailId');
             views.detail.classList.add('hidden');
-            switchTab('activities'); 
+            switchTab('activities');
         }
 
-        // Inicia a renderização
         renderActivities();
-        
-        // Carrega a aba salva (ranking ou atividades)
-        loadSavedTab();
+        loadSavedState();
 
         const sheetUrl = "https://docs.google.com/spreadsheets/d/1DjXXLwV10WsaMUGCS9qEBU6jjY0S8cpjRv_JhVgoqLQ/gviz/tq?tqx=out:csv&sheet=Folha1";
 
         async function fetchRanking() {
             const container = document.getElementById('ranking-container');
-            
             try {
                 const response = await fetch(sheetUrl);
                 const data = await response.text();
-                const rows = data.split('\n');
-                let players = [];
+                const rows = data.split('\n').slice(1);
                 
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if (!row) continue;
-                    const columns = row.split(',');
-                    if (columns.length < 2) continue;
-                    
-                    let cleanName = columns[0].replace(/"/g, '').trim();
-                    let rawPoints = columns[1];
-                    if (rawPoints) {
-                        rawPoints = rawPoints.replace(/"/g, '').replace(/pts/i, '').trim();
-                    }
-                    const finalPoints = parseInt(rawPoints);
-                    
-                    if (cleanName && !isNaN(finalPoints)) {
-                        players.push({
-                            name: cleanName,
-                            points: finalPoints
-                        });
-                    }
-                }
-                
-                // 1. Baralha a lista aleatoriamente primeiro
-                players.sort(() => Math.random() - 0.5);
+                let players = rows.map(row => {
+                    const cols = row.split(',');
+                    if (cols.length < 2) return null;
+                    const cleanName = cols[0].replace(/"/g, '').trim();
+                    const rawPoints = cols[1]?.replace(/"/g, '').replace(/\D/g, '').trim() || '0';
+                    return { name: cleanName, points: parseInt(rawPoints) };
+                }).filter(p => p && p.name && !isNaN(p.points));
 
-                // 2. Ordena por pontos (mantendo a aleatoriedade nos empates)
+                players.sort(() => Math.random() - 0.5);
                 players.sort((a, b) => b.points - a.points);
 
-                container.innerHTML = '';
-                
-                players.forEach((player, index) => {
-                    const html = `
-                        <div class="player-row grid-layout">
-                            <span class="col-rank">${index + 1}</span>
-                            <span class="col-name" title="${player.name}">${player.name}</span>
-                            <span class="col-points">${player.points}</span>
-                        </div>
-                    `;
-                    container.innerHTML += html;
-                });
+                container.innerHTML = players.map((player, index) => `
+                    <div class="player-row grid-layout">
+                        <span class="col-rank">${index + 1}</span>
+                        <span class="col-name" title="${player.name}">${player.name}</span>
+                        <span class="col-points">${player.points}</span>
+                    </div>
+                `).join('');
 
             } catch (error) {
                 console.error("Erro:", error);
                 container.innerHTML = '<div class="loading">Erro ao carregar ranking.</div>';
             }
         }
-
         fetchRanking();
     </script>
-
 </body>
 </html>
