@@ -148,7 +148,6 @@
             flex-shrink: 0;
         }
 
-        /* NAVIGATION TABS */
         .nav-container {
             display: flex;
             gap: 15px;
@@ -180,7 +179,6 @@
             background-color: var(--primary-cyan);
         }
 
-        /* CARD AND LISTS */
         .ranking-card {
             background-color: #FFFFFF;
             width: 90%;
@@ -197,10 +195,6 @@
             z-index: 2; 
         }
 
-        /* CORREÇÃO DO SCROLL: 
-           Estes IDs garantem que os contentores das abas ocupam a altura total
-           e organizam o conteúdo (header + lista) em coluna.
-        */
         #view-ranking, #view-activities {
             height: 100%;
             display: flex;
@@ -262,7 +256,6 @@
         
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
 
-        /* DETALHES DA ATIVIDADE */
         .detail-view {
             padding: 20px;
             overflow-y: auto;
@@ -331,6 +324,26 @@
             text-align: justify;
         }
 
+        .instagram-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 12px;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        
+        .instagram-btn:hover {
+            background-color: var(--primary-red);
+        }
+
         .back-btn {
             align-self: flex-start;
             margin-bottom: 10px;
@@ -368,7 +381,6 @@
         .footer-logo-bar { height: 35px; } 
         .footer-logo-neduc { height: 42px; }
 
-        /* Utilitários de Visibilidade */
         .hidden { display: none !important; }
 
         @media (max-width: 800px) {
@@ -482,6 +494,9 @@
             <div class="detail-desc" id="d-desc">
                 Descrição completa aqui...
             </div>
+            
+            <a href="#" target="_blank" class="instagram-btn hidden" id="d-instagram-btn">Instagram</a>
+
         </div>
 
     </div>
@@ -492,101 +507,22 @@
     </footer>
 
     <script>
-        /* =========================================
-           DADOS DAS ATIVIDADES (EDITAR AQUI)
-           ========================================= */
         const activitiesData = [
             {
                 id: 1,
-                title: "Inscrição no Uprint",
-                subtitle: "Registo Inicial",
-                type: "Administrativo",
-                location: "Online / Presencial",
-                date: "Permanente",
-                time: "N/A",
-                points: 50,
-                cost: "Gratuito",
-                desc: "Ao te inscreveres no programa UPrint Scheme, ganhas automaticamente os teus primeiros pontos para começar a subir no ranking."
-            },
-            {
-                id: 2,
-                title: "Participação Workshop",
-                subtitle: "Workshop de Modelação 3D",
+                title: "Autodesk Inventor",
+                subtitle: "CAD",
                 type: "Formação",
-                location: "Sala A.2.3",
-                date: "15 Março 2024",
-                time: "14:30",
-                points: 200,
-                cost: "5€ Sócios / 7€ Não Sócios",
-                desc: "Aprende as bases da modelação 3D para impressão. Este workshop cobre desde o desenho inicial até à preparação do ficheiro gcode."
-            },
-            {
-                id: 3,
-                title: "Compra na Barral",
-                subtitle: "Aquisição de Material",
-                type: "Parceria",
-                location: "Lojas Barral",
-                date: "Permanente",
-                time: "Horário Loja",
+                location: "Sala A6.1 do DEI",
+                date: "26/11/2025 e 03/12/2025",
+                time: "16h00 - 18h30",
                 points: 10,
-                cost: "Variável",
-                desc: "Por cada compra efetuada na Barral (parceiro oficial), ganhas 10 pontos extra. Basta apresentar o talão."
-            },
-            {
-                id: 4,
-                title: "Doação de Material",
-                subtitle: "Filamento ou Componentes",
-                type: "Comunitário",
-                location: "Lab UPrint",
-                date: "Permanente",
-                time: "10:00 - 18:00",
-                points: 150,
-                cost: "Material doado",
-                desc: "Tens restos de filamento ou peças que não usas? Doa ao laboratório para ajudar outros estudantes e ganha pontos."
-            },
-            {
-                id: 5,
-                title: "Trazer um amigo",
-                subtitle: "Referenciação",
-                type: "Social",
-                location: "Presencial",
-                date: "Permanente",
-                time: "N/A",
-                points: 100,
-                cost: "Gratuito",
-                desc: "Traz um amigo para se inscrever no UPrint. Se ele mencionar o teu nome na inscrição, ambos ganham pontos."
-            },
-            {
-                id: 6,
-                title: "Voluntariado (1h)",
-                subtitle: "Apoio ao Lab",
-                type: "Voluntariado",
-                location: "Lab UPrint",
-                date: "A agendar",
-                time: "A agendar",
-                points: 300,
-                cost: "Tempo",
-                desc: "Ajuda na manutenção das impressoras ou na organização do espaço. Valor por cada hora de ajuda."
-            },
-             {
-                id: 7,
-                title: "Vencedor de Torneio",
-                subtitle: "Design Challenge",
-                type: "Competição",
-                location: "Online",
-                date: "20 Maio 2024",
-                time: "18:00",
-                points: 500,
-                cost: "Gratuito",
-                desc: "Prémio atribuído ao vencedor do desafio de design mensal. O tema deste mês é 'Acessórios de Mesa'."
+                cost: "3",
+                desc: "Vem aprender como funcionam os softwares CAD com um exemplo bem prático: modelar um gripper robótico! 🦾 O melhor desenho será prototipado através de impressão 3D.",
+                link: "https://www.instagram.com/p/DRIcs8liEiu/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA=="
             }
         ];
 
-        /* =========================================
-           LÓGICA DE NAVEGAÇÃO
-           ========================================= */
-        
-        // Elementos DOM
         const views = {
             ranking: document.getElementById('view-ranking'),
             activities: document.getElementById('view-activities'),
@@ -597,9 +533,7 @@
             activities: document.getElementById('btn-activities')
         };
 
-        // Troca entre abas principais
         function switchTab(tabName) {
-            // Se mudar de tab, garante que o detalhe fecha
             views.detail.classList.add('hidden');
             
             if (tabName === 'ranking') {
@@ -615,11 +549,6 @@
             }
         }
 
-        /* =========================================
-           LÓGICA DE DETALHES DA ATIVIDADE
-           ========================================= */
-
-        // Renderiza a lista de atividades baseada no JSON
         function renderActivities() {
             const container = document.getElementById('activities-list-container');
             container.innerHTML = '';
@@ -635,12 +564,10 @@
             });
         }
 
-        // Abre a página de detalhe e preenche os dados
         function openDetail(id) {
             const act = activitiesData.find(a => a.id === id);
             if (!act) return;
 
-            // Preencher campos
             document.getElementById('d-title').textContent = act.title;
             document.getElementById('d-subtitle').textContent = act.subtitle;
             document.getElementById('d-type').textContent = act.type;
@@ -651,30 +578,29 @@
             document.getElementById('d-cost').textContent = act.cost;
             document.getElementById('d-desc').textContent = act.desc;
             
-            // Esconder listas e mostrar detalhe
+            const instaBtn = document.getElementById('d-instagram-btn');
+            if(act.link) {
+                instaBtn.href = act.link;
+                instaBtn.classList.remove('hidden');
+            } else {
+                instaBtn.classList.add('hidden');
+            }
+            
             views.ranking.classList.add('hidden');
             views.activities.classList.add('hidden');
             views.detail.classList.remove('hidden');
             
-            // Remover estado ativo dos botões para indicar "sub-página"
             btns.ranking.classList.remove('active');
             btns.activities.classList.remove('active'); 
         }
 
-        // Botão Voltar
         function closeDetail() {
             views.detail.classList.add('hidden');
-            // Volta para a aba de atividades
             switchTab('activities'); 
         }
 
-        // Inicializar Lista
         renderActivities();
 
-
-        /* =========================================
-           LÓGICA DO RANKING (Google Sheets)
-           ========================================= */
         const sheetUrl = "https://docs.google.com/spreadsheets/d/1DjXXLwV10WsaMUGCS9qEBU6jjY0S8cpjRv_JhVgoqLQ/gviz/tq?tqx=out:csv&sheet=Folha1";
 
         async function fetchRanking() {
