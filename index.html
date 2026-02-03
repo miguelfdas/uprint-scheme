@@ -204,7 +204,6 @@
             gap: 10px;
         }
 
-        /* Layout específico para Atividades (sem coluna de rank) */
         .grid-layout-activities {
             display: grid;
             grid-template-columns: 1fr 100px; 
@@ -241,6 +240,7 @@
             font-weight: 600;
             font-size: 1rem;
             transition: background 0.2s;
+            cursor: pointer;
         }
 
         .player-row:hover { background-color: var(--primary-cyan); }
@@ -250,6 +250,105 @@
         .col-points { text-align: right; font-weight: 800; }
         
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
+
+        /* DETALHES DA ATIVIDADE */
+        .detail-view {
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .detail-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .detail-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            color: var(--primary-red);
+        }
+
+        .detail-subtitle {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--aux-gray);
+            margin-top: 5px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background-color: #F9F9F9;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #E0E0E0;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--aux-gray);
+            margin-bottom: 3px;
+        }
+
+        .detail-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .detail-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .detail-link-btn {
+            display: inline-block;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px;
+            text-align: center;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 8px;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        
+        .detail-link-btn:hover { background-color: var(--primary-red); }
+
+        .back-btn {
+            align-self: flex-start;
+            margin-bottom: 10px;
+            padding: 6px 15px;
+            font-size: 0.8rem;
+            border: 1px solid #000;
+            background: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .back-btn:hover { background: #000; color: #fff; }
 
         .footer-logos {
             position: relative; 
@@ -302,6 +401,8 @@
             .footer-logos { background: transparent; border: none; padding: 0; gap: 15px; transform: scale(0.95); }
             .footer-logo-bar { height: 30px; }
             .footer-logo-neduc { height: 38px; }
+
+            .detail-grid { grid-template-columns: 1fr; gap: 10px; }
         }
     </style>
 </head>
@@ -344,43 +445,50 @@
                 <span style="text-align: right;">Valor</span>
             </div>
 
-            <div class="ranking-list">
-                <div class="player-row grid-layout-activities">
-                    <span class="col-name">Inscrição no Uprint</span>
-                    <span class="col-points">50 pts</span>
+            <div class="ranking-list" id="activities-list-container">
                 </div>
+        </div>
 
-                <div class="player-row grid-layout-activities">
-                    <span class="col-name">Participação Workshop</span>
-                    <span class="col-points">200 pts</span>
-                </div>
+        <div id="view-detail" class="hidden detail-view">
+            <button class="back-btn" onclick="closeDetail()">← Voltar à Lista</button>
+            
+            <div>
+                <div class="detail-title" id="d-title">Titulo</div>
+                <div class="detail-subtitle" id="d-subtitle">Subtitulo</div>
+            </div>
 
-                <div class="player-row grid-layout-activities">
-                    <span class="col-name">Compra na Barral</span>
-                    <span class="col-points">10 pts</span>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Tipo</span>
+                    <span class="detail-value" id="d-type">Workshop</span>
                 </div>
+                <div class="detail-item">
+                    <span class="detail-label">Pontos</span>
+                    <span class="detail-value" style="color:var(--primary-red)" id="d-points">100 pts</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Data</span>
+                    <span class="detail-value" id="d-date">--/--/--</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Hora</span>
+                    <span class="detail-value" id="d-time">--:--</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Local</span>
+                    <span class="detail-value" id="d-location">DEI</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Custo</span>
+                    <span class="detail-value" id="d-cost">Gratuito</span>
+                </div>
+            </div>
 
-                <div class="player-row grid-layout-activities">
-                    <span class="col-name">Doação de Material</span>
-                    <span class="col-points">150 pts</span>
-                </div>
+            <div class="detail-desc" id="d-desc">
+                Descrição completa aqui...
+            </div>
 
-                <div class="player-row grid-layout-activities">
-                    <span class="col-name">Trazer um amigo</span>
-                    <span class="col-points">100 pts</span>
-                </div>
-                
-                <div class="player-row grid-layout-activities">
-                    <span class="col-name">Voluntariado (1h)</span>
-                    <span class="col-points">300 pts</span>
-                </div>
-
-                 <div class="player-row grid-layout-activities">
-                    <span class="col-name">Vencedor de Torneio</span>
-                    <span class="col-points">500 pts</span>
-                </div>
-                
-                </div>
+            <a href="#" target="_blank" class="detail-link-btn" id="d-link">Mais Informações</a>
         </div>
 
     </div>
@@ -391,27 +499,205 @@
     </footer>
 
     <script>
-        // Lógica das Tabs
-        function switchTab(tabName) {
-            const viewRanking = document.getElementById('view-ranking');
-            const viewActivities = document.getElementById('view-activities');
-            const btnRanking = document.getElementById('btn-ranking');
-            const btnActivities = document.getElementById('btn-activities');
+        /* =========================================
+           DADOS DAS ATIVIDADES (EDITAR AQUI)
+           ========================================= */
+        const activitiesData = [
+            {
+                id: 1,
+                title: "Inscrição no Uprint",
+                subtitle: "Registo Inicial",
+                type: "Administrativo",
+                location: "Online / Presencial",
+                date: "Permanente",
+                time: "N/A",
+                points: 50,
+                cost: "Gratuito",
+                desc: "Ao te inscreveres no programa UPrint Scheme, ganhas automaticamente os teus primeiros pontos para começar a subir no ranking.",
+                link: "https://uprint.pt"
+            },
+            {
+                id: 2,
+                title: "Participação Workshop",
+                subtitle: "Workshop de Modelação 3D",
+                type: "Formação",
+                location: "Sala A.2.3",
+                date: "15 Março 2024",
+                time: "14:30",
+                points: 200,
+                cost: "5€ Sócios / 7€ Não Sócios",
+                desc: "Aprende as bases da modelação 3D para impressão. Este workshop cobre desde o desenho inicial até à preparação do ficheiro gcode.",
+                link: "https://forms.google.com/exemplo"
+            },
+            {
+                id: 3,
+                title: "Compra na Barral",
+                subtitle: "Aquisição de Material",
+                type: "Parceria",
+                location: "Lojas Barral",
+                date: "Permanente",
+                time: "Horário Loja",
+                points: 10,
+                cost: "Variável",
+                desc: "Por cada compra efetuada na Barral (parceiro oficial), ganhas 10 pontos extra. Basta apresentar o talão.",
+                link: "https://barral.pt"
+            },
+            {
+                id: 4,
+                title: "Doação de Material",
+                subtitle: "Filamento ou Componentes",
+                type: "Comunitário",
+                location: "Lab UPrint",
+                date: "Permanente",
+                time: "10:00 - 18:00",
+                points: 150,
+                cost: "Material doado",
+                desc: "Tens restos de filamento ou peças que não usas? Doa ao laboratório para ajudar outros estudantes e ganha pontos.",
+                link: "#"
+            },
+            {
+                id: 5,
+                title: "Trazer um amigo",
+                subtitle: "Referenciação",
+                type: "Social",
+                location: "Presencial",
+                date: "Permanente",
+                time: "N/A",
+                points: 100,
+                cost: "Gratuito",
+                desc: "Traz um amigo para se inscrever no UPrint. Se ele mencionar o teu nome na inscrição, ambos ganham pontos.",
+                link: "#"
+            },
+            {
+                id: 6,
+                title: "Voluntariado (1h)",
+                subtitle: "Apoio ao Lab",
+                type: "Voluntariado",
+                location: "Lab UPrint",
+                date: "A agendar",
+                time: "A agendar",
+                points: 300,
+                cost: "Tempo",
+                desc: "Ajuda na manutenção das impressoras ou na organização do espaço. Valor por cada hora de ajuda.",
+                link: "#"
+            },
+             {
+                id: 7,
+                title: "Vencedor de Torneio",
+                subtitle: "Design Challenge",
+                type: "Competição",
+                location: "Online",
+                date: "20 Maio 2024",
+                time: "18:00",
+                points: 500,
+                cost: "Gratuito",
+                desc: "Prémio atribuído ao vencedor do desafio de design mensal. O tema deste mês é 'Acessórios de Mesa'.",
+                link: "#"
+            }
+        ];
 
+        /* =========================================
+           LÓGICA DE NAVEGAÇÃO
+           ========================================= */
+        
+        // Elementos DOM
+        const views = {
+            ranking: document.getElementById('view-ranking'),
+            activities: document.getElementById('view-activities'),
+            detail: document.getElementById('view-detail')
+        };
+        const btns = {
+            ranking: document.getElementById('btn-ranking'),
+            activities: document.getElementById('btn-activities')
+        };
+
+        // Troca entre abas principais
+        function switchTab(tabName) {
+            // Se mudar de tab, garante que o detalhe fecha
+            views.detail.classList.add('hidden');
+            
             if (tabName === 'ranking') {
-                viewRanking.classList.remove('hidden');
-                viewActivities.classList.add('hidden');
-                btnRanking.classList.add('active');
-                btnActivities.classList.remove('active');
+                views.ranking.classList.remove('hidden');
+                views.activities.classList.add('hidden');
+                btns.ranking.classList.add('active');
+                btns.activities.classList.remove('active');
             } else {
-                viewRanking.classList.add('hidden');
-                viewActivities.classList.remove('hidden');
-                btnRanking.classList.remove('active');
-                btnActivities.classList.add('active');
+                views.ranking.classList.add('hidden');
+                views.activities.classList.remove('hidden');
+                btns.ranking.classList.remove('active');
+                btns.activities.classList.add('active');
             }
         }
 
-        // Lógica do Ranking (Google Sheets)
+        /* =========================================
+           LÓGICA DE DETALHES DA ATIVIDADE
+           ========================================= */
+
+        // Renderiza a lista de atividades baseada no JSON
+        function renderActivities() {
+            const container = document.getElementById('activities-list-container');
+            container.innerHTML = '';
+
+            activitiesData.forEach(act => {
+                const html = `
+                    <div class="player-row grid-layout-activities" onclick="openDetail(${act.id})">
+                        <span class="col-name">${act.title}</span>
+                        <span class="col-points">${act.points} pts</span>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // Abre a página de detalhe e preenche os dados
+        function openDetail(id) {
+            const act = activitiesData.find(a => a.id === id);
+            if (!act) return;
+
+            // Preencher campos
+            document.getElementById('d-title').textContent = act.title;
+            document.getElementById('d-subtitle').textContent = act.subtitle;
+            document.getElementById('d-type').textContent = act.type;
+            document.getElementById('d-location').textContent = act.location;
+            document.getElementById('d-date').textContent = act.date;
+            document.getElementById('d-time').textContent = act.time;
+            document.getElementById('d-points').textContent = act.points + " pts";
+            document.getElementById('d-cost').textContent = act.cost;
+            document.getElementById('d-desc').textContent = act.desc;
+            
+            const btnLink = document.getElementById('d-link');
+            if(act.link && act.link !== '#') {
+                btnLink.href = act.link;
+                btnLink.style.display = 'inline-block';
+                btnLink.textContent = "Mais Informações";
+            } else {
+                btnLink.style.display = 'none';
+            }
+
+            // Esconder listas e mostrar detalhe
+            views.ranking.classList.add('hidden');
+            views.activities.classList.add('hidden');
+            views.detail.classList.remove('hidden');
+            
+            // Remover estado ativo dos botões para indicar "sub-página"
+            btns.ranking.classList.remove('active');
+            btns.activities.classList.remove('active'); 
+        }
+
+        // Botão Voltar
+        function closeDetail() {
+            views.detail.classList.add('hidden');
+            // Volta para a aba de atividades
+            switchTab('activities'); 
+        }
+
+        // Inicializar Lista
+        renderActivities();
+
+
+        /* =========================================
+           LÓGICA DO RANKING (Google Sheets)
+           ========================================= */
         const sheetUrl = "https://docs.google.com/spreadsheets/d/1DjXXLwV10WsaMUGCS9qEBU6jjY0S8cpjRv_JhVgoqLQ/gviz/tq?tqx=out:csv&sheet=Folha1";
 
         async function fetchRanking() {
