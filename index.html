@@ -514,7 +514,7 @@
                 date: "26/11/2025 e 03/12/2025",
                 time: "16h00 - 18h30",
                 points: 10,
-                cost: "3",
+                cost: "3€",
                 desc: "Vem aprender como funcionam os softwares CAD com um exemplo bem prático: modelar um gripper robótico! 🦾 O melhor desenho será prototipado através de impressão 3D.",
                 link: "https://www.instagram.com/p/DRIcs8liEiu/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA=="
             }
@@ -630,7 +630,10 @@
                     }
                 }
                 
+                players.sort(() => Math.random() - 0.5);
+
                 players.sort((a, b) => b.points - a.points);
+
                 container.innerHTML = '';
                 
                 players.forEach((player, index) => {
