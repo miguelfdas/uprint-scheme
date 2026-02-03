@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UPrint Scheme Ranking - Final Bauhaus Style</title>
+    <title>UPrint Scheme Ranking</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -265,13 +265,12 @@
             gap: 15px;
         }
 
-        .detail-header-row {
+        .detail-nav-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 5px;
         }
 
         .detail-title {
@@ -324,29 +323,7 @@
             text-align: justify;
         }
 
-        .instagram-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
-            font-weight: 800;
-            text-transform: uppercase;
-            border-radius: 12px;
-            margin-top: 10px;
-            transition: background-color 0.2s;
-            cursor: pointer;
-        }
-        
-        .instagram-btn:hover {
-            background-color: var(--primary-red);
-        }
-
         .back-btn {
-            align-self: flex-start;
-            margin-bottom: 10px;
             padding: 6px 15px;
             font-size: 0.8rem;
             border: 1px solid #000;
@@ -355,8 +332,26 @@
             cursor: pointer;
             font-weight: 700;
             text-transform: uppercase;
+            transition: all 0.2s;
         }
         .back-btn:hover { background: #000; color: #fff; }
+
+        .instagram-btn-small {
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 15px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+
+        .instagram-btn-small:hover {
+            background-color: var(--primary-red);
+        }
 
         .footer-logos {
             position: relative; 
@@ -457,7 +452,11 @@
         </div>
 
         <div id="view-detail" class="hidden detail-view">
-            <button class="back-btn" onclick="closeDetail()">← Voltar a Atividades</button>
+            
+            <div class="detail-nav-header">
+                <button class="back-btn" onclick="closeDetail()">← Voltar a Atividades</button>
+                <a href="#" target="_blank" class="instagram-btn-small hidden" id="d-instagram-btn">Instagram ↗</a>
+            </div>
             
             <div>
                 <div class="detail-title" id="d-title">Titulo</div>
@@ -495,8 +494,6 @@
                 Descrição completa aqui...
             </div>
             
-            <a href="#" target="_blank" class="instagram-btn hidden" id="d-instagram-btn">Instagram</a>
-
         </div>
 
     </div>
