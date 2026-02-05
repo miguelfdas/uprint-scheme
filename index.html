@@ -138,13 +138,17 @@
             transition: background 0.2s; cursor: pointer;
         }
         .player-row:hover { background-color: var(--primary-cyan); }
+        
+        /* ATUALIZADO: Seta centrada verticalmente */
         .row-arrow {
             font-weight: 900; font-size: 1.2rem; color: var(--aux-gray);
-            text-align: right; transition: all 0.2s ease;
+            display: flex; align-items: center; justify-content: flex-end;
+            transition: all 0.2s ease;
         }
         .player-row:hover .row-arrow {
             color: var(--primary-red); transform: translateX(3px);
         }
+
         .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.1rem; }
         .col-name { text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .col-points { text-align: right; font-weight: 800; }
