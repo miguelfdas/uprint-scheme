@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -111,11 +111,14 @@
         #view-ranking, #view-activities {
             height: 100%; display: flex; flex-direction: column; overflow: hidden;
         }
-        .grid-layout, .grid-layout-activities {
+        .grid-layout { 
             display: grid; align-items: center; gap: 10px;
+            grid-template-columns: 50px 1fr 80px; 
         }
-        .grid-layout { grid-template-columns: 50px 1fr 80px; }
-        .grid-layout-activities { grid-template-columns: 1fr 100px; }
+        .grid-layout-activities { 
+            display: grid; align-items: center; gap: 10px;
+            grid-template-columns: 1fr 80px 30px; 
+        }
         .ranking-header {
             border-bottom: 2px solid #000; padding: 15px 20px;
             font-weight: 900; text-transform: uppercase;
@@ -135,6 +138,13 @@
             transition: background 0.2s; cursor: pointer;
         }
         .player-row:hover { background-color: var(--primary-cyan); }
+        .row-arrow {
+            font-weight: 900; font-size: 1.2rem; color: var(--aux-gray);
+            text-align: right; transition: all 0.2s ease;
+        }
+        .player-row:hover .row-arrow {
+            color: var(--primary-red); transform: translateX(3px);
+        }
         .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.1rem; }
         .col-name { text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .col-points { text-align: right; font-weight: 800; }
@@ -201,7 +211,7 @@
             .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
             .ranking-card { width: 95%; margin: 0 auto 15px auto; }
             .grid-layout { grid-template-columns: 40px 1fr 60px; gap: 5px; }
-            .grid-layout-activities { grid-template-columns: 1fr 70px; gap: 5px; }
+            .grid-layout-activities { grid-template-columns: 1fr 70px 30px; gap: 5px; }
             .ranking-header, .player-row { padding: 12px 10px; font-size: 0.85rem; }
             .footer-logos { background: transparent; border: none; padding: 0; gap: 15px; transform: scale(0.95); }
             .footer-logo-bar { height: 30px; }
@@ -222,65 +232,66 @@
 
     <div class="nav-container">
         <button class="nav-btn active" onclick="switchTab('ranking')" id="btn-ranking">Ranking</button>
-        <button class="nav-btn" onclick="switchTab('activities')" id="btn-activities">Atividades</button>
+        <button class="nav-btn" onclick="switchTab('activities')" id="btn-activities">Activities</button>
     </div>
 
     <div class="ranking-card">
         <div id="view-ranking">
             <div class="ranking-header grid-layout">
-                <span>#</span>
-                <span>Participante</span>
-                <span style="text-align: right;">Pontos</span>
+                <span>RANK</span>
+                <span>Participant</span>
+                <span style="text-align: right;">Points</span>
             </div>
             <div class="ranking-list" id="ranking-container">
-                <div class="loading">A carregar...</div>
+                <div class="loading">Loading...</div>
             </div>
         </div>
 
         <div id="view-activities" class="hidden">
             <div class="ranking-header grid-layout-activities">
-                <span>Descrição da Atividade</span>
-                <span style="text-align: right;">Pontos</span>
+                <span>Activity Description</span>
+                <span style="text-align: right;">Points</span>
+                <span></span>
             </div>
             <div class="ranking-list" id="activities-list-container"></div>
         </div>
 
         <div id="view-detail" class="hidden detail-view">
             <div class="detail-nav-header">
-                <button class="back-btn" onclick="closeDetail()">← Voltar a Atividades</button>
+                <button class="back-btn" onclick="closeDetail()">← Back to Activities</button>
                 <a href="#" target="_blank" class="instagram-btn-small hidden" id="d-instagram-btn">Instagram ↗</a>
             </div>
             <div>
-                <div class="detail-title" id="d-title">Titulo</div>
-                <div class="detail-subtitle" id="d-subtitle">Subtitulo</div>
+                <div class="detail-title" id="d-title">Title</div>
+                <div class="detail-subtitle" id="d-subtitle">Subtitle</div>
             </div>
             <div class="detail-grid">
                 <div class="detail-item">
-                    <span class="detail-label">Tipo</span>
+                    <span class="detail-label">Type</span>
                     <span class="detail-value" id="d-type">Workshop</span>
                 </div>
                 <div class="detail-item">
-                    <span class="detail-label">Pontos</span>
+                    <span class="detail-label">Points</span>
                     <span class="detail-value" style="color:var(--primary-red)" id="d-points">100 pts</span>
                 </div>
                 <div class="detail-item">
-                    <span class="detail-label">Data</span>
+                    <span class="detail-label">Date</span>
                     <span class="detail-value" id="d-date">--/--/--</span>
                 </div>
                 <div class="detail-item">
-                    <span class="detail-label">Hora</span>
+                    <span class="detail-label">Time</span>
                     <span class="detail-value" id="d-time">--:--</span>
                 </div>
                 <div class="detail-item">
-                    <span class="detail-label">Local</span>
+                    <span class="detail-label">Location</span>
                     <span class="detail-value" id="d-location">DEI</span>
                 </div>
                 <div class="detail-item">
-                    <span class="detail-label">Custo</span>
-                    <span class="detail-value" id="d-cost">Gratuito</span>
+                    <span class="detail-label">Cost</span>
+                    <span class="detail-value" id="d-cost">Free</span>
                 </div>
             </div>
-            <div class="detail-desc" id="d-desc">Descrição completa aqui...</div>
+            <div class="detail-desc" id="d-desc">Description here...</div>
         </div>
     </div>
 
@@ -347,6 +358,7 @@
                 <div class="player-row grid-layout-activities" onclick="openDetail(${act.id})">
                     <span class="col-name">${act.title}</span>
                     <span class="col-points">${act.points}</span>
+                    <span class="row-arrow">→</span>
                 </div>
             `).join('');
         }
@@ -417,11 +429,10 @@
 
             } catch (error) {
                 console.error("Erro:", error);
-                container.innerHTML = '<div class="loading">Erro ao carregar ranking.</div>';
+                container.innerHTML = '<div class="loading">Error loading ranking.</div>';
             }
         }
         fetchRanking();
     </script>
 </body>
 </html>
-
