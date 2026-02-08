@@ -112,17 +112,14 @@
         #view-ranking, #view-activities {
             height: 100%; display: flex; flex-direction: column; overflow: hidden;
         }
-        
         .grid-layout { 
             display: grid; align-items: center; gap: 10px;
             grid-template-columns: 50px 1fr 80px; 
         }
-        
         .grid-layout-activities { 
             display: grid; align-items: center; gap: 10px;
             grid-template-columns: 1fr 80px 30px; 
         }
-
         .ranking-header {
             border-bottom: 2px solid #000; padding: 15px 20px;
             font-weight: 900; text-transform: uppercase;
@@ -136,57 +133,31 @@
         .ranking-list::-webkit-scrollbar { width: 6px; }
         .ranking-list::-webkit-scrollbar-track { background: #FFF; }
         .ranking-list::-webkit-scrollbar-thumb { background-color: var(--text-color); border-radius: 10px; }
-        
-        /* Base row style */
         .player-row {
             padding: 12px 20px; border-bottom: 1px solid #E0E0E0;
             font-weight: 600; font-size: 1rem;
             transition: background 0.2s; 
         }
-
-        /* Specific styles for Activity Rows (Interactive) */
-        .activity-row {
-            cursor: pointer;
-        }
-        .activity-row:hover { 
-            background-color: var(--primary-cyan); 
-        }
-
-        /* Specific styles for Ranking Rows (Static) */
-        .ranking-row {
-            cursor: default; /* Not interactive */
-        }
-        /* No hover effect for ranking rows */
-
+        .activity-row { cursor: pointer; }
+        .activity-row:hover { background-color: var(--primary-cyan); }
+        .ranking-row { cursor: default; }
         .info-icon {
             display: flex; align-items: center; justify-content: center;
             width: 100%; height: 100%;
             color: var(--primary-red);
             font-family: 'Times New Roman', serif;
             font-weight: 700; font-style: italic;
-            font-size: 1.2rem;
-            margin: 0 auto;
+            font-size: 1.2rem; margin: 0 auto;
         }
-
         .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.1rem; }
-        
-        /* Center text for participant name */
         .col-name { 
-            text-transform: uppercase; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            text-align: center; 
+            text-transform: uppercase; white-space: nowrap; 
+            overflow: hidden; text-overflow: ellipsis; text-align: center; 
         }
-        /* Align left for Activity description */
         .col-desc { 
-            text-transform: uppercase; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            text-align: left; 
+            text-transform: uppercase; white-space: nowrap; 
+            overflow: hidden; text-overflow: ellipsis; text-align: left; 
         }
-
         .col-points { text-align: right; font-weight: 800; }
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
         .detail-view {
@@ -251,13 +222,13 @@
             .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
             .ranking-card { width: 95%; margin: 0 auto 15px auto; }
             .grid-layout { grid-template-columns: 40px 1fr 60px; gap: 5px; }
-            .grid-layout-activities { grid-template-columns: 1fr 70px 30px; gap: 5px; }
+            .grid-layout-activities { grid-template-columns: 1fr 70px 40px; gap: 5px; }
             .ranking-header, .player-row { padding: 12px 10px; font-size: 0.85rem; }
             .footer-logos { background: transparent; border: none; padding: 0; gap: 15px; transform: scale(0.95); }
             .footer-logo-bar { height: 30px; }
             .footer-logo-neduc { height: 38px; }
             .detail-grid { grid-template-columns: 1fr; gap: 10px; }
-            .info-icon { font-size: 1rem; } /* Slightly smaller icon on mobile */
+            .info-icon { font-size: 1rem; } 
         }
     </style>
 </head>
@@ -290,7 +261,7 @@
 
         <div id="view-activities" class="hidden">
             <div class="ranking-header grid-layout-activities">
-                <span>Activity Description</span>
+                <span>Activity</span>
                 <span style="text-align: right;">Points</span>
                 <span></span>
             </div>
