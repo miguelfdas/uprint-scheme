@@ -14,6 +14,7 @@
             --primary-red: #D2232A;
             --primary-cyan: #6ED3EF;
             --aux-gray: #878787;
+            --scrollbar-width: 6px; /* Variável para controlar alinhamento */
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -113,10 +114,10 @@
             height: 100%; display: flex; flex-direction: column; overflow: hidden;
         }
         
+        /* RANKING GRID: Simetria Perfeita (80px esquerda / 80px direita) */
         .grid-layout { 
             display: grid; align-items: center; gap: 10px;
-            /* Desktop default */
-            grid-template-columns: 50px 1fr 80px; 
+            grid-template-columns: 80px 1fr 80px; 
         }
         
         .grid-layout-activities { 
@@ -129,12 +130,14 @@
             font-weight: 900; text-transform: uppercase;
             font-size: 0.9rem; letter-spacing: 1px;
             background-color: #fff; flex-shrink: 0;
+            /* Compensação da Scrollbar para alinhar cabeçalho com lista */
+            padding-right: calc(20px + var(--scrollbar-width)); 
         }
         .ranking-list {
             flex-grow: 1; overflow-y: auto; padding: 0;
             scrollbar-width: thin; scrollbar-color: var(--primary-red) #FFF;
         }
-        .ranking-list::-webkit-scrollbar { width: 6px; }
+        .ranking-list::-webkit-scrollbar { width: var(--scrollbar-width); }
         .ranking-list::-webkit-scrollbar-track { background: #FFF; }
         .ranking-list::-webkit-scrollbar-thumb { background-color: var(--text-color); border-radius: 10px; }
         
@@ -157,26 +160,29 @@
             font-size: 1.2rem; margin: 0 auto;
         }
 
+        /* Alinhamento Centrado para todas as colunas do Ranking */
         .col-rank { 
-            font-weight: 900; 
-            color: var(--primary-red); 
-            font-size: 1.1rem; 
-            /* Alinha o rank ao centro da sua coluna */
+            font-weight: 900; color: var(--primary-red); font-size: 1.1rem; 
             text-align: center; 
         }
-        
         .col-name { 
             text-transform: uppercase; white-space: nowrap; 
-            overflow: hidden; text-overflow: ellipsis; 
-            text-align: center; 
+            overflow: hidden; text-overflow: ellipsis; text-align: center; 
         }
+        .col-points { 
+            font-weight: 800; text-align: center; 
+        }
+
+        /* Atividades mantêm alinhamentos específicos */
         .col-desc { 
             text-transform: uppercase; white-space: nowrap; 
             overflow: hidden; text-overflow: ellipsis; text-align: left; 
         }
-        .col-points { text-align: right; font-weight: 800; }
+        .col-points-act { 
+            text-align: right; font-weight: 800; 
+        }
+
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
-        
         .detail-view {
             padding: 20px; overflow-y: auto; height: 100%;
             display: flex; flex-direction: column; gap: 15px;
@@ -204,7 +210,6 @@
         }
         .detail-value { font-size: 0.95rem; font-weight: 600; color: #000; }
         .detail-desc { font-size: 0.95rem; line-height: 1.5; text-align: justify; }
-        
         .back-btn {
             padding: 6px 15px; font-size: 0.8rem;
             border: 1px solid #000; background: #fff;
@@ -220,7 +225,6 @@
             display: inline-block;
         }
         .instagram-btn-small:hover { background-color: var(--primary-red); }
-        
         .footer-logos {
             position: relative; display: flex; align-items: center; justify-content: center;
             gap: 20px; z-index: 10; background-color: rgba(255,255,255,0.95); 
@@ -242,16 +246,18 @@
             .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
             .ranking-card { width: 95%; margin: 0 auto 15px auto; }
             
-            /* MOBILE LAYOUT FIX: 60px on both sides ensures 1fr is mathematically centered */
+            /* MOBILE LAYOUT: Simetria Perfeita (60px / 60px) */
             .grid-layout { 
-                display: grid;
-                align-items: center;
-                gap: 5px;
+                display: grid; align-items: center; gap: 5px;
                 grid-template-columns: 60px 1fr 60px; 
             }
-            
             .grid-layout-activities { grid-template-columns: 1fr 70px 40px; gap: 5px; }
+            
             .ranking-header, .player-row { padding: 12px 10px; font-size: 0.85rem; }
+            
+            /* Ajuste de padding no mobile para a scrollbar */
+            .ranking-header { padding-right: calc(10px + var(--scrollbar-width)); }
+
             .footer-logos { background: transparent; border: none; padding: 0; gap: 15px; transform: scale(0.95); }
             .footer-logo-bar { height: 30px; }
             .footer-logo-neduc { height: 38px; }
@@ -280,7 +286,7 @@
             <div class="ranking-header grid-layout">
                 <span style="text-align: center;">RANK</span>
                 <span style="text-align: center;">Participant</span>
-                <span style="text-align: right;">Points</span>
+                <span style="text-align: center;">Points</span>
             </div>
             <div class="ranking-list" id="ranking-container">
                 <div class="loading">Loading...</div>
@@ -405,13 +411,12 @@
 
         function renderActivities() {
             const container = document.getElementById('activities-list-container');
-            // Reverses the order so ID 2 appears before ID 1
             const reversedData = [...activitiesData].reverse();
             
             container.innerHTML = reversedData.map(act => `
                 <div class="player-row activity-row grid-layout-activities" onclick="openDetail(${act.id})">
                     <span class="col-desc">${act.title}</span>
-                    <span class="col-points">${act.points}</span>
+                    <span class="col-points-act">${act.points}</span>
                     <span class="info-icon">i</span>
                 </div>
             `).join('');
