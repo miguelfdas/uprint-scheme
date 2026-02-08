@@ -377,7 +377,10 @@
 
         function renderActivities() {
             const container = document.getElementById('activities-list-container');
-            container.innerHTML = activitiesData.map(act => `
+            // Reverses the order so ID 2 appears before ID 1
+            const reversedData = [...activitiesData].reverse();
+            
+            container.innerHTML = reversedData.map(act => `
                 <div class="player-row activity-row grid-layout-activities" onclick="openDetail(${act.id})">
                     <span class="col-desc">${act.title}</span>
                     <span class="col-points">${act.points}</span>
@@ -396,7 +399,7 @@
             const elements = {
                 'd-title': act.title, 'd-subtitle': act.subtitle, 'd-type': act.type,
                 'd-location': act.location, 'd-date': act.date, 'd-time': act.time,
-                'd-points': `${act.points} pts`, 'd-cost': act.cost, 'd-desc': act.desc
+                'd-points': `${act.points} pts`, 'd-cost': act.cost, 'd-desc': act.desc || ''
             };
             for (const [key, val] of Object.entries(elements)) {
                 document.getElementById(key).textContent = val;
