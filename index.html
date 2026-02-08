@@ -160,7 +160,10 @@
             text-transform: uppercase; white-space: nowrap; 
             overflow: hidden; text-overflow: ellipsis; text-align: left; 
         }
-        .col-points { text-align: center; font-weight: 800; }
+        /* CORRIGIDO: Centrado para ambas as views */
+        .col-points, .col-points-act { 
+            text-align: center; font-weight: 800; 
+        }
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
         .detail-view {
             padding: 20px; overflow-y: auto; height: 100%;
@@ -340,7 +343,7 @@
                 type: "Formação",
                 location: "Sala A6.1 do DEI",
                 date: "18/02/2026",
-                time: "14h30 - 18h30",
+                time: "14h00",
                 points: 10,
                 cost: "3€",
             }
@@ -388,7 +391,7 @@
             container.innerHTML = reversedData.map(act => `
                 <div class="player-row activity-row grid-layout-activities" onclick="openDetail(${act.id})">
                     <span class="col-desc">${act.title}</span>
-                    <span class="col-points">${act.points}</span>
+                    <span class="col-points-act">${act.points}</span>
                     <span class="info-icon">i</span>
                 </div>
             `).join('');
