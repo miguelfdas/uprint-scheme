@@ -112,14 +112,18 @@
         #view-ranking, #view-activities {
             height: 100%; display: flex; flex-direction: column; overflow: hidden;
         }
+        
         .grid-layout { 
             display: grid; align-items: center; gap: 10px;
+            /* Desktop default */
             grid-template-columns: 50px 1fr 80px; 
         }
+        
         .grid-layout-activities { 
             display: grid; align-items: center; gap: 10px;
             grid-template-columns: 1fr 80px 30px; 
         }
+
         .ranking-header {
             border-bottom: 2px solid #000; padding: 15px 20px;
             font-weight: 900; text-transform: uppercase;
@@ -133,14 +137,17 @@
         .ranking-list::-webkit-scrollbar { width: 6px; }
         .ranking-list::-webkit-scrollbar-track { background: #FFF; }
         .ranking-list::-webkit-scrollbar-thumb { background-color: var(--text-color); border-radius: 10px; }
+        
         .player-row {
             padding: 12px 20px; border-bottom: 1px solid #E0E0E0;
             font-weight: 600; font-size: 1rem;
             transition: background 0.2s; 
         }
+
         .activity-row { cursor: pointer; }
         .activity-row:hover { background-color: var(--primary-cyan); }
         .ranking-row { cursor: default; }
+
         .info-icon {
             display: flex; align-items: center; justify-content: center;
             width: 100%; height: 100%;
@@ -149,10 +156,19 @@
             font-weight: 700; font-style: italic;
             font-size: 1.2rem; margin: 0 auto;
         }
-        .col-rank { font-weight: 900; color: var(--primary-red); font-size: 1.1rem; }
+
+        .col-rank { 
+            font-weight: 900; 
+            color: var(--primary-red); 
+            font-size: 1.1rem; 
+            /* Alinha o rank ao centro da sua coluna */
+            text-align: center; 
+        }
+        
         .col-name { 
             text-transform: uppercase; white-space: nowrap; 
-            overflow: hidden; text-overflow: ellipsis; text-align: center; 
+            overflow: hidden; text-overflow: ellipsis; 
+            text-align: center; 
         }
         .col-desc { 
             text-transform: uppercase; white-space: nowrap; 
@@ -160,6 +176,7 @@
         }
         .col-points { text-align: right; font-weight: 800; }
         .loading { text-align: center; padding: 40px; color: var(--aux-gray); grid-column: 1 / -1; }
+        
         .detail-view {
             padding: 20px; overflow-y: auto; height: 100%;
             display: flex; flex-direction: column; gap: 15px;
@@ -187,6 +204,7 @@
         }
         .detail-value { font-size: 0.95rem; font-weight: 600; color: #000; }
         .detail-desc { font-size: 0.95rem; line-height: 1.5; text-align: justify; }
+        
         .back-btn {
             padding: 6px 15px; font-size: 0.8rem;
             border: 1px solid #000; background: #fff;
@@ -202,6 +220,7 @@
             display: inline-block;
         }
         .instagram-btn-small:hover { background-color: var(--primary-red); }
+        
         .footer-logos {
             position: relative; display: flex; align-items: center; justify-content: center;
             gap: 20px; z-index: 10; background-color: rgba(255,255,255,0.95); 
@@ -213,6 +232,7 @@
         .footer-logo-bar { height: 35px; } 
         .footer-logo-neduc { height: 42px; }
         .hidden { display: none !important; }
+        
         @media (max-width: 800px) {
             .bauhaus-elem { display: none; }
             body::after { display: none; } 
@@ -221,7 +241,15 @@
             .main-logo { width: 60%; margin-top: 10px; }
             .page-subtitle { font-size: 1.1rem; margin: 10px 0; }
             .ranking-card { width: 95%; margin: 0 auto 15px auto; }
-            .grid-layout { grid-template-columns: 40px 1fr 60px; gap: 5px; }
+            
+            /* MOBILE LAYOUT FIX: 60px on both sides ensures 1fr is mathematically centered */
+            .grid-layout { 
+                display: grid;
+                align-items: center;
+                gap: 5px;
+                grid-template-columns: 60px 1fr 60px; 
+            }
+            
             .grid-layout-activities { grid-template-columns: 1fr 70px 40px; gap: 5px; }
             .ranking-header, .player-row { padding: 12px 10px; font-size: 0.85rem; }
             .footer-logos { background: transparent; border: none; padding: 0; gap: 15px; transform: scale(0.95); }
@@ -250,7 +278,7 @@
     <div class="ranking-card">
         <div id="view-ranking">
             <div class="ranking-header grid-layout">
-                <span>RANK</span>
+                <span style="text-align: center;">RANK</span>
                 <span style="text-align: center;">Participant</span>
                 <span style="text-align: right;">Points</span>
             </div>
@@ -316,7 +344,7 @@
         const activitiesData = [
             {
                 id: 1,
-                title: "Autodesk Inventor #1",
+                title: "Autodesk Inventor",
                 subtitle: "CAD",
                 type: "Formação",
                 location: "Sala A6.1 do DEI",
@@ -329,12 +357,12 @@
             },
             {
                 id: 2,
-                title: "Autodesk Inventor #2",
+                title: "Autodesk Inventor",
                 subtitle: "CAD",
                 type: "Formação",
                 location: "Sala A6.1 do DEI",
                 date: "18/02/2026",
-                time: "14h30 - 18h30",
+                time: "14h00",
                 points: 10,
                 cost: "3€",
             }
@@ -462,5 +490,3 @@
     </script>
 </body>
 </html>
-
-
