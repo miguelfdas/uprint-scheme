@@ -437,20 +437,39 @@
 
         const sheetUrl = "https://docs.google.com/spreadsheets/d/1DjXXLwV10WsaMUGCS9qEBU6jjY0S8cpjRv_JhVgoqLQ/gviz/tq?tqx=out:csv&sheet=Folha1";
 
-        async function fetchRanking() {
+async function fetchRanking() {
             const container = document.getElementById('ranking-container');
             try {
                 const response = await fetch(sheetUrl);
                 const data = await response.text();
                 const rows = data.split('\n').slice(1);
                 
-                let players = rows.map(row => {
+                const playersMap = {};
+
+                rows.forEach(row => {
                     const cols = row.split(',');
-                    if (cols.length < 2) return null;
+                    if (cols.length < 2) return;
+
                     const cleanName = cols[0].replace(/"/g, '').trim();
                     const rawPoints = cols[1]?.replace(/"/g, '').replace(/\D/g, '').trim() || '0';
-                    return { name: cleanName, points: parseInt(rawPoints) };
-                }).filter(p => p && p.name && !isNaN(p.points));
+                    const points = parseInt(rawPoints);
+                    
+                    let studentId = cols[2]?.replace(/"/g, '').trim();
+
+                    if (!studentId) {
+                        studentId = cleanName;
+                    }
+
+                    if (!cleanName || isNaN(points)) return;
+
+                    if (playersMap[studentId]) {
+                        playersMap[studentId].points += points;
+                    } else {
+                        playersMap[studentId] = { name: cleanName, points: points };
+                    }
+                });
+
+                let players = Object.values(playersMap);
 
                 players.sort(() => Math.random() - 0.5);
                 players.sort((a, b) => b.points - a.points);
@@ -472,4 +491,5 @@
     </script>
 </body>
 </html>
+
 
